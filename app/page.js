@@ -1,12 +1,9 @@
 'use client'
 import { Box, Button, TextField, Typography } from "@mui/material"
-import dbConnect from "@/lib/mongodb";
-import {User} from "@/mongoose/models/User.js"
 import { useState, useEffect, useRef } from 'react'
 
 export default function Home() {
   const [email, setEmail] = useState("")
-  
 
   return (
     <Box
@@ -33,6 +30,8 @@ export default function Home() {
               fontSize: '15px',
             },
           }}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
       </Box>
       <Box>
