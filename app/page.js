@@ -1,18 +1,22 @@
 'use client'
-import { Box, Button, TextField, Typography } from "@mui/material"
-import { useState, useEffect, useRef } from 'react'
+import { Box, Button, TextField, Typography } from "@mui/material";
+import { useState } from 'react';
 import validator from 'validator';
 
-
 export default function Home() {
-  const [email, setEmail] = useState("")
+  const [email, setEmail] = useState("");
 
   const loadEmail = async () => {
     if (!email) {
-      alert("Please enter a valid email"); 
+      alert("Please enter a valid email");
       return;
     }
-  
+
+    if (!validator.isEmail(email)) {
+      alert("Please enter a valid email format");
+      return;
+    }
+
     try {
       const response = await fetch(`/api/user`, {
         method: "POST",
@@ -21,24 +25,23 @@ export default function Home() {
         },
         body: JSON.stringify({ email }),
       });
-  
+
+      console.log(response)
+
       if (!response.ok) {
-        throw new Error("Failed to load email");
+        alert("Failed to load email");
       }
-  
       const data = await response.json();
-      console.log(data);
-      alert(`Welcome, ${data.name}!`);
-      
-      // Clear the TextField
+      alert(`Welcome, ${email}!`);
+
       setEmail("");
-  
+
     } catch (err) {
-      console.error("Failed to load email", err);  
+      console.log(err);
       alert("Failed to load email. Please try again.");
     }
   };
-  
+
   return (
     <Box
       width="100vw"
@@ -77,6 +80,5 @@ export default function Home() {
         </Button>
       </Box>
     </Box>
-
   );
 }
