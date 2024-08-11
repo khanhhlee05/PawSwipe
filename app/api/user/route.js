@@ -24,6 +24,11 @@ export async function POST(req) {
       return new NextResponse('Failed to save user', { status: 500 });
     }
 
-    return new NextResponse(confirmedEmail, { status: 200})
+    return new NextResponse(JSON.stringify(confirmedEmail), {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
     
   }
