@@ -17,6 +17,21 @@ export default function Home() {
       return;
     }
 
+    try{
+      const myEmail = await fetch(`/api/email/${email}`);
+
+      if (!myEmail.ok) {
+        alert(`Welcome, ${email}! You are in. Please stay tuned for updates`);
+        setEmail("");
+        
+        return;
+      }
+      
+     
+    } catch (err) {
+      console.log(err);
+    }
+
     try {
       const response = await fetch(`/api/user`, {
         method: "POST",

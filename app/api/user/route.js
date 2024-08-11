@@ -32,3 +32,32 @@ export async function POST(req) {
       });
     
   }
+
+export async function GET(req){
+    await dbConnect();
+    
+    let data;
+    try {
+        data = await req.json();
+    }catch (error) {
+        console.log(error);
+        return new NextResponse('Invalid JSON input', { status: 400 });
+      }
+    
+      if (!data){
+        return new NextResponse('Invalid request payload', { status: 400 });
+      }
+
+    const users = await User.findOne(data)
+    if (!users) {
+        return new NextResponse('No user found', { status: 404 });
+    }
+
+    return new NextResponse(JSON.stringify(users), {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+    
+}
