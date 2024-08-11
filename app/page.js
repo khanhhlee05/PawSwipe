@@ -1,19 +1,46 @@
 'use client'
-import { Box, Button, TextField } from "@mui/material"
+import { Box, Button, TextField, Typography } from "@mui/material"
+import dbConnect from "@/lib/mongodb";
+import {User} from "@/mongoose/models/User.js"
+import { useState, useEffect, useRef } from 'react'
 
 export default function Home() {
-  return (
-    <Box 
-    width="100vw" 
-    height="100vh" 
-    display="flex" 
-    flexDirection="column" 
-    justifyContent="center" 
-    alignContent="center"
-    bgcolor="#F5F5DC">
-      <TextField></TextField>
-      <Button></Button>
+  const [email, setEmail] = useState("")
+  
 
+  return (
+    <Box
+      width="100vw"
+      height="100vh"
+      display="flex"
+      flexDirection="column"
+      justifyContent="center"
+      alignItems="center"
+      bgcolor="#F5F5DC"
+    >
+      <Typography variant="h4" gutterBottom>
+        Welcome to PawSwipe
+      </Typography>
+      <Box mb={2}>
+        <TextField
+          label="Email"
+          sx={{
+            width: '300px',
+            '& .MuiInputBase-root': {
+              padding: '5px',
+            },
+            '& .MuiInputLabel-root': {
+              fontSize: '15px',
+            },
+          }}
+        />
+      </Box>
+      <Box>
+        <Button variant="contained" color="primary">
+          Submit
+        </Button>
+      </Box>
     </Box>
+
   );
 }
