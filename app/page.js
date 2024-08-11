@@ -7,23 +7,27 @@ export default function Home() {
   const [email, setEmail] = useState("");
 
   const loadEmail = async () => {
-    if (!email) {
+    const trimEmail = email.trim();
+    if (!trimEmail) {
       alert("Please enter a valid email");
       return;
     }
 
-    if (!validator.isEmail(email)) {
+
+
+    if (!validator.isEmail(trimEmail)) {
       alert("Please enter a valid email format");
       return;
     }
 
     try{
-      const myEmail = await fetch(`/api/email/${email}`);
-
-      if (!myEmail.ok) {
-        alert(`Welcome, ${email}! You are in. Please stay tuned for updates`);
+      const myEmail = await fetch(`/api/user/${encodeURIComponent(trimEmail)}`, {
+        method: "GET",
+      });
+      console.log(myEmail);
+      if (myEmail.ok) {
+        alert(`Welcome back, ${trimEmail}! You are in. Please stay tuned for updates`);
         setEmail("");
-        
         return;
       }
       
@@ -38,18 +42,20 @@ export default function Home() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email : trimEmail }),
       });
 
-      console.log(response)
-
+      
+      console.log(response);
       if (!response.ok) {
         alert("Failed to load email");
-      }
-      const data = await response.json();
-      alert(`Welcome, ${email}!`);
+      } else {
+        alert(`Welcome, ${trimEmail}!`);
 
       setEmail("");
+      }
+
+      
 
     } catch (err) {
       console.log(err);
