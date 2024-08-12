@@ -90,7 +90,7 @@ export default function Home() {
         textAlign: 'left', 
         overflowY: 'scroll', 
         '@media (max-width: 600px)': {
-        height: '150vh', // Adjust this value as needed
+        height: '150vh', 
       },
       }}
     >
