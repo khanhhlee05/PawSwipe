@@ -2,6 +2,8 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { useState } from 'react';
 import validator from 'validator';
+import './globals.css'; 
+
 
 export default function Home() {
   const [email, setEmail] = useState("");
@@ -13,14 +15,12 @@ export default function Home() {
       return;
     }
 
-
-
     if (!validator.isEmail(trimEmail)) {
       alert("Please enter a valid email format");
       return;
     }
 
-    try{
+    try {
       const myEmail = await fetch(`/api/user/${encodeURIComponent(trimEmail)}`, {
         method: "GET",
       });
@@ -31,7 +31,6 @@ export default function Home() {
         return;
       }
       
-     
     } catch (err) {
       console.log(err);
     }
@@ -45,17 +44,13 @@ export default function Home() {
         body: JSON.stringify({ email : trimEmail }),
       });
 
-      
       console.log(response);
       if (!response.ok) {
         alert("Failed to load email");
       } else {
         alert(`Welcome, ${trimEmail}!`);
-
-      setEmail("");
+        setEmail("");
       }
-
-      
 
     } catch (err) {
       console.log(err);
@@ -70,34 +65,78 @@ export default function Home() {
       display="flex"
       flexDirection="column"
       justifyContent="center"
-      alignItems="center"
-      bgcolor="#F5F5DC"
+      alignItems="flex-start"
+      sx={{ 
+        pl: { xs: 6, sm: 8 }, 
+        pr: { xs: 2, sm: 4 }, 
+        backgroundImage: 'url(/background1.jpg)', 
+        backgroundSize: 'cover', 
+        textAlign: 'left', 
+      }}
     >
-      <Typography variant="h4" gutterBottom>
-        Welcome to PawSwipe
+      <Typography 
+        gutterBottom
+        className="professional-text-title" 
+        sx={{ fontSize: { xs: '2rem', sm: '3rem' } }} 
+      >
+        PawSwipe is launching soon... 
       </Typography>
-      <Box mb={2}>
+      <Typography 
+        variant="h4" 
+        gutterBottom
+        className="professional-text-subtitle" 
+        sx={{ 
+          fontSize: { xs: '1.25rem', sm: '2rem' }, 
+          paddingBottom: '20px', 
+          paddingTop: '20px',
+        }}
+      >
+        Join our Waitlist and be the first to use PawSwipe!
+      </Typography>
+      <Box mb={4} width="100%" maxWidth="400px" className="feedback-glow-container">
         <TextField
-          label="Email"
-          sx={{
-            width: '300px',
-            '& .MuiInputBase-root': {
-              padding: '5px',
-            },
-            '& .MuiInputLabel-root': {
-              fontSize: '15px',
-            },
-          }}
+          label="Email address..."
+          variant="outlined"
+          fullWidth
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          sx={{
+            '& .MuiOutlinedInput-root': {
+              borderRadius: '20px',
+              backgroundColor: 'rgba(255, 255, 255, 0.2)',
+              '&:hover fieldset': {
+                borderColor: 'rgba(51, 51, 51, 0.6)',
+              },
+              '&.Mui-focused fieldset': {
+                borderColor: 'rgba(51, 51, 51, 0.6)',
+              },
+            },
+            '& .MuiInputLabel-root': {
+              color: 'rgba(51, 51, 51, 0.6)',
+            },
+            '& .MuiInputBase-input': {
+              color: '#333',
+            },
+          }}
         />
       </Box>
       <Box>
         <Button 
-        variant="contained" 
-        color="primary"
-        onClick={loadEmail}>
-          Submit
+          variant="contained" 
+          color="primary"
+          className="button glowing-border"
+          sx={{
+            backgroundColor: '#8A7D72',
+            borderRadius: '30px',
+            padding: '10px 20px',
+            textTransform: 'none',
+            '&:hover': {
+              backgroundColor: '#705E52',
+            },
+          }}
+          onClick={loadEmail}
+        >
+          Join Now
         </Button>
       </Box>
     </Box>
