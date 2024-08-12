@@ -79,9 +79,9 @@ export default function Home() {
       width="100vw"
       height="100vh"
       display="flex"
-      flexDirection="column"
-      justifyContent="center"
-      alignItems="flex-start"
+      flexDirection={{ xs: 'column', md: 'row' }}
+      justifyContent="space-between"
+      alignItems={{ xs: 'flex-start', md: 'center' }}
       sx={{ 
         pl: { xs: 6, sm: 8 }, 
         pr: { xs: 2, sm: 4 }, 
@@ -90,7 +90,7 @@ export default function Home() {
         textAlign: 'left', 
       }}
     >
-
+      <Box>
       <Typography 
         gutterBottom
         className="professional-text-title" 
@@ -99,7 +99,7 @@ export default function Home() {
         PawSwipe is launching soon... 
       </Typography>
       <Typography 
-        variant="h4" 
+        variant="h5" 
         gutterBottom
         className="professional-text-subtitle" 
         sx={{ 
@@ -158,6 +158,32 @@ export default function Home() {
           {isLoading ? 'Sending...' : 'Join now 🐾'}
         </Button>
         {/* Paw Symbols */}
+      </Box>
+      </Box>
+
+
+      {/* Product Description Box */}
+      <Box
+        width={{ xs: '80%', md: '30%' }}
+        p={{ xs: 2, sm: 4 }}
+        mt={{ xs: 2, md: 0 }}
+        mr={{ xs: 2, sm: 4, md: 6 }}  // Adding margin-right
+        bgcolor="transparent"
+        borderRadius="15px"
+        boxShadow={2}
+      >
+        
+        <Typography 
+          variant="h5" 
+          className="professional-text-subtitle" 
+          sx={{ 
+            fontSize: { xs: '1.25rem', sm: '2rem' }, 
+            paddingBottom: '20px', 
+            paddingTop: '20px',
+          }}
+        >
+          PawSwipe is your new go-to app for pet adoption. Swipe through profiles of pets looking for their forever homes, and connect with shelters or foster homes in your area. Join the waitlist now and be among the first to experience the next generation of pet adoption.
+        </Typography>
       </Box>
     </Box>
   );
