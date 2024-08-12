@@ -87,6 +87,8 @@ export default function Home() {
         pr: { xs: 2, sm: 4 }, 
         backgroundImage: 'url(/background1.jpg)', 
         backgroundSize: 'cover', 
+        backgroundPosition: 'center', 
+        backgroundRepeat: 'no-repeat', 
         textAlign: 'left', 
       }}
     >
