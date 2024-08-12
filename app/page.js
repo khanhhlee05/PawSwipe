@@ -80,16 +80,18 @@ export default function Home() {
       height="100vh"
       display="flex"
       flexDirection={{ xs: 'column', md: 'row' }}
-      justifyContent="space-between"
+      justifyContent="center"
       alignItems={{ xs: 'flex-start', md: 'center' }}
       sx={{ 
         pl: { xs: 6, sm: 8 }, 
         pr: { xs: 2, sm: 4 }, 
         backgroundImage: 'url(/background1.jpg)', 
         backgroundSize: 'cover', 
-        backgroundPosition: 'center', 
-        backgroundRepeat: 'no-repeat', 
         textAlign: 'left', 
+        overflowY: 'scroll', 
+        '@media (max-width: 600px)': {
+        height: '150vh', // Adjust this value as needed
+      },
       }}
     >
       <Box>
