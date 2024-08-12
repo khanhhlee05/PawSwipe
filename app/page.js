@@ -9,6 +9,14 @@ export default function Home() {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false)
 
+
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault()
+      loadEmail()
+    }
+  }
+
   const loadEmail = async () => {
     const trimEmail = email.trim();
     if (!trimEmail) {
@@ -109,6 +117,7 @@ export default function Home() {
           fullWidth
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          onKeyPress={handleKeyPress}
           sx={{
             '& .MuiOutlinedInput-root': {
               borderRadius: '20px',
