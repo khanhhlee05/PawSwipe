@@ -84,16 +84,15 @@ export default function Home() {
       alignItems={{ xs: 'flex-start', md: 'center' }}
       sx={{ 
         pl: { xs: 6, sm: 8 }, 
-        pr: { xs: 6, sm: 4 }, 
+        pr: { xs: 2, sm: 4 }, 
         backgroundImage: 'url(/background1.jpg)', 
         backgroundSize: 'cover', 
         backgroundAttachment: { xs: 'fixed', sm: 'scroll' },
         textAlign: 'left', 
         overflowY: 'scroll', 
-        overflowX: 'hidden',
+        overflowX: 'right',
         '@media (max-width: 600px)': {
         height: '150vh', 
-        textAlign: 'left', 
       },
       }}
     >
