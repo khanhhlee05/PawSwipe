@@ -168,21 +168,21 @@ export default function Home() {
         p={{ xs: 2, sm: 4 }}
         mt={{ xs: 2, md: 0 }}
         mr={{ xs: 2, sm: 4, md: 6 }}  // Adding margin-right
-        bgcolor="transparent"
+        bgcolor="rgba(197, 117, 197, 0.2)"
         borderRadius="15px"
         boxShadow={2}
       >
         
         <Typography 
-          variant="h5" 
-          className="professional-text-subtitle" 
+          variant="h3" 
+          className="description-text" 
           sx={{ 
             fontSize: { xs: '1.25rem', sm: '2rem' }, 
             paddingBottom: '20px', 
             paddingTop: '20px',
           }}
         >
-          PawSwipe is your new go-to app for pet adoption. Swipe through profiles of pets looking for their forever homes, and connect with shelters or foster homes in your area. Join the waitlist now and be among the first to experience the next generation of pet adoption.
+          PawSwipe is your new go-to app for pet adoption. Swipe through profiles of pets looking for their forever homes, and connect with shelters or foster homes in your area 🐶
         </Typography>
       </Box>
     </Box>

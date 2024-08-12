@@ -29,6 +29,13 @@
   color: #626060;
 }
 
+.description-text {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+  font-size: 1.5rem;
+  color: rgb(82, 91, 91);
+}
+
 .feedback-glow-container {
   position: relative;
 }
@@ -91,8 +98,9 @@
     z-index: -1;
     filter: blur(5px);
     animation: glowing 20s linear infinite;
-    border-radius: 30px; /* Round the glow effect */
+    border-radius: 30px; 
     }
+
 
     @keyframes glowing {
       0% {
@@ -105,3 +113,5 @@
         background-position: 0% 50%;
       }
     }
+
+    
