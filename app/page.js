@@ -87,10 +87,13 @@ export default function Home() {
         pr: { xs: 2, sm: 4 }, 
         backgroundImage: 'url(/background1.jpg)', 
         backgroundSize: 'cover', 
+        backgroundAttachment: { xs: 'fixed', sm: 'scroll' },
         textAlign: 'left', 
-        overflowY: 'auto',
+        overflowY: 'scroll', 
+        overflowX: 'hidden',
         '@media (max-width: 600px)': {
         height: '150vh', 
+        overflowX: 'hidden',
       },
       }}
     >
