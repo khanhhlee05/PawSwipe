@@ -88,7 +88,7 @@ export default function Home() {
         backgroundImage: 'url(/background1.jpg)', 
         backgroundSize: 'cover', 
         textAlign: 'left', 
-        overflowY: 'scroll', 
+        overflowY: 'auto',
         '@media (max-width: 600px)': {
         height: '150vh', 
       },
