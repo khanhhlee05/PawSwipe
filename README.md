@@ -24,7 +24,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 2. For major changes make a new branch. Example: 'git checkout -b feature-name'.
 3. Push your branch: Example: 'git push origin feature-name'
 4. Create a pull request so that other team members can review, test and approve the feature being merged into the main branch. 
-## Deploy on Vercel
 
 ## Team members
 1. Mehdi Atmani
