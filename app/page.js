@@ -108,7 +108,7 @@ export default function Home() {
           paddingTop: '20px',
         }}
       >
-        Join our Waitlist and be the first to use PawSwipe!
+        Join our <span className="professional-text-title-small">waitlist</span> to discover a smarter, more personalized way to find your perfect pet match.
       </Typography>
       <Box mb={4} width="100%" maxWidth="400px" className="feedback-glow-container">
         <TextField
