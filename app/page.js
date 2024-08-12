@@ -82,6 +82,7 @@ export default function Home() {
         textAlign: 'left', 
       }}
     >
+
       <Typography 
         gutterBottom
         className="professional-text-title" 
@@ -145,8 +146,9 @@ export default function Home() {
           onClick={loadEmail}
           disabled={isLoading}
         >
-          {isLoading ? 'Sending...' : 'Join now'}
+          {isLoading ? 'Sending...' : 'Join now 🐾'}
         </Button>
+        {/* Paw Symbols */}
       </Box>
     </Box>
   );
