@@ -90,9 +90,10 @@ export default function Home() {
         backgroundAttachment: { xs: 'fixed', sm: 'scroll' },
         textAlign: 'left', 
         overflowY: 'scroll', 
-        overflowX: 'right',
+        overflowX: 'hidden',
         '@media (max-width: 600px)': {
         height: '150vh', 
+        width:"105vw",
       },
       }}
     >
