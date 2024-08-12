@@ -7,6 +7,7 @@ import './globals.css';
 
 export default function Home() {
   const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false)
 
   const loadEmail = async () => {
     const trimEmail = email.trim();
@@ -20,6 +21,8 @@ export default function Home() {
       return;
     }
 
+    setIsLoading(true);
+
     try {
       const myEmail = await fetch(`/api/user/${encodeURIComponent(trimEmail)}`, {
         method: "GET",
@@ -28,6 +31,7 @@ export default function Home() {
       if (myEmail.ok) {
         alert(`Welcome back, ${trimEmail}! You are in. Please stay tuned for updates`);
         setEmail("");
+        setIsLoading(false); 
         return;
       }
       
@@ -55,7 +59,11 @@ export default function Home() {
     } catch (err) {
       console.log(err);
       alert("Failed to load email. Please try again.");
+    } finally {
+      setIsLoading(false); 
     }
+
+
   };
 
   return (
@@ -135,8 +143,9 @@ export default function Home() {
             },
           }}
           onClick={loadEmail}
+          disabled={isLoading}
         >
-          Join Now
+          {isLoading ? 'Sending...' : 'Join now'}
         </Button>
       </Box>
     </Box>
