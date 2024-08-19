@@ -113,7 +113,9 @@ export default function Home() {
           fontSize: { xs: '1.25rem', sm: '2rem' }, 
           paddingBottom: '20px', 
           paddingTop: '20px',
+          margin: "10px",
         }}
+        
       >
         Join our <span className="professional-text-title-small">waitlist</span> to discover a smarter, more personalized way to find your perfect pet match.
       </Typography>
