@@ -91,4 +91,11 @@ const userSchema = new mongoose.Schema({
 
 })
 
+userSchema.pre('save', function (next) {
+    this.updatedAt = Date.now()
+    const salt = bcrypt.genSaltSync()
+    this.password = bcrypt.hashSync(this.password, salt)
+    next()
+})
+
 export const User = mongoose.models.User || mongoose.model('User', userSchema);

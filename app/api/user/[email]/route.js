@@ -29,3 +29,45 @@ export async function GET(req, { params }) {
     return new NextResponse('Server error', { status: 500 });
   }
 }
+
+//update specific user in the database
+export async function PATCH(req, { params }) {
+  try {
+    await dbConnect();
+
+    const { email } = params;
+
+    const user = await User.findOne({ email });
+
+    let data
+
+    try {
+      data = await req.json();
+    } catch (error) {
+      return new NextResponse('Invalid JSON input', { status: 400 });
+    }
+
+
+    console.log(Object.keys(data));
+
+    for (const key in data) {
+
+      const value = data[key];
+      user[key] = value;
+
+    }
+
+    const updatedUser = await user.save()
+
+    return new NextResponse(JSON.stringify(updatedUser), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  } catch (error) {
+    return new NextResponse(`${error.message}`, { status: 500})
+  }
+
+
+}
