@@ -52,7 +52,7 @@ const userSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.String,
             maxlength: [50, 'City must be at most 50 characters long']
         },
-        zipcode: {
+        zipCode: {
             type: mongoose.Schema.Types.String,
             validate: {
                 validator: (value) => validator.isPostalCode(value, 'US'),
