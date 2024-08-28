@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/mongodb';
 import { User } from '@/mongoose/schema/User';
 
+//fetch specific users from the database
 export async function GET(req, { params }) {
   await dbConnect();
 

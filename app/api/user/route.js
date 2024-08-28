@@ -33,22 +33,11 @@ export async function POST(req) {
     
   }
 
+  //Get a list of current users
 export async function GET(req){
     await dbConnect();
-    
-    let data;
-    try {
-        data = await req.json();
-    }catch (error) {
-        console.log(error);
-        return new NextResponse('Invalid JSON input', { status: 400 });
-      }
-    
-      if (!data){
-        return new NextResponse('Invalid request payload', { status: 400 });
-      }
 
-    const users = await User.findOne(data)
+    const users = await User.find()
     if (!users) {
         return new NextResponse('No user found', { status: 404 });
     }
