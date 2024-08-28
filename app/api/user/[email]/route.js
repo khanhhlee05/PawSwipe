@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/mongodb';
 import { User } from '@/mongoose/schema/User';
+import { Pet } from '@/mongoose/schema/Pet';
 
 //fetch specific users from the database
 export async function GET(req, { params }) {
@@ -51,9 +52,32 @@ export async function PATCH(req, { params }) {
     console.log(Object.keys(data));
 
     for (const key in data) {
-
       const value = data[key];
+      
+      if (key === "wishlist" || key === "swipedRight") {
+        if (!Array.isArray(value)) {
+          throw new Error('Invalid input value')
+        }
+        //check for existing in ID before adding
+        let userList = user[key]
+        for (const petId of value ){
+          const addPet = await Pet.findOne({_id: petId})
+          if (!addPet) {
+            throw new Error(`Pet ${petId} doesn't exist`)
+          } else {
+            userList.push(petId)
+          }
+          user[key] = userList
+        }
+      } else if (key === "adoptionHistory"){
+        /* TO DO:
+        add a handler if key is equal to ...
+        check for existance in adoption model
+        then add.. */
+      } else{
+
       user[key] = value;
+      }
 
     }
 
@@ -66,6 +90,7 @@ export async function PATCH(req, { params }) {
       },
     });
   } catch (error) {
+    console.error(error);
     return new NextResponse(`${error.message}`, { status: 500})
   }
 
