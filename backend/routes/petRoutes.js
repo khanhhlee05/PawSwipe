@@ -1,4 +1,4 @@
-const express = require('express');
+/* const express = require('express');
 const router = express.Router();
 const Pet = require('../models/pet');
 
@@ -40,4 +40,4 @@ router.post('/pets/adopt/:id', async (req, res) => {
   }
 });
 
-module.exports = router;
+module.exports = router; */
