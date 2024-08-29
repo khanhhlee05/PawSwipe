@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;700&display=swap');
+
+.professional-text-title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 4.0rem;
+  color: #333;
+  background: linear-gradient(45deg, rgb(196, 164, 132), violet);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rainbowBackground 3s infinite;
+}
+
+.professional-text-title-small {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 9git 00;
+  font-size: 1.5rem;
+  color: #333;
+  background: linear-gradient(45deg, rgb(196, 164, 132), violet);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rainbowBackground 3s infinite;
+}
+
+.professional-text-subtitle {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+  font-size: 1.5rem;
+  color: #626060;
+}
+
+.description-text {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+  font-size: 1.5rem;
+  color: rgb(82, 91, 91);
+}
+
+.feedback-glow-container {
+  position: relative;
+}
+
+.feedback-glow-container:before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  right: -8px;
+  bottom: -8px;
+  background: linear-gradient(45deg, rgb(152, 118, 84), violet);
+  background-size: 400% 400%;
+  z-index: -1;
+  filter: blur(6px);
+  animation: glowing 20s linear infinite;
+  border-radius: 10px;
+}
+
+
+@keyframes rainbowBackground {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.button {
+  text-decoration: none;
+  padding: 10px 20px;
+  border: 2px solid #fff;
+  color: #fff;
+  background-color: #333;
+  border-radius: 25px; /* Round the button corners */
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1; /* Ensure the button is above the glowing effect */
+  font-size: 1em;
+  font-weight: bold;
+  }
+
+  .glowing-border {
+    position: relative;
+    }
+    
+    .glowing-border:before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    background: linear-gradient(90deg, rgb(196, 164, 132), violet);
+    background-size: 400% 400%;
+    z-index: -1;
+    filter: blur(5px);
+    animation: glowing 20s linear infinite;
+    border-radius: 30px; 
+    }
+
+
+    @keyframes glowing {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    

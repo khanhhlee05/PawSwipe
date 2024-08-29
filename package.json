@@ -1,0 +1,32 @@
+{
+  "name": "paw_swipe",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.13.0",
+    "@emotion/styled": "^11.13.0",
+    "@mui/icons-material": "^5.16.7",
+    "@mui/material": "^5.16.7",
+    "@react-spring/web": "^9.5.5",
+    "@vercel/analytics": "^1.3.1",
+    "dotenv": "^16.4.5",
+    "firebase": "^10.13.0",
+    "mongoose": "^8.5.2",
+    "next": "14.2.5",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-tinder-card": "^1.6.4",
+    "validator": "^13.12.0"
+  },
+  "devDependencies": {
+    "eslint": "^8",
+    "eslint-config-next": "14.2.5"
+  }
+}
