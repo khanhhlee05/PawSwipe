@@ -2,7 +2,7 @@ import dbConnect from "@/lib/mongodb";
 import { User } from "@/mongoose/schema/User";
 import { NextResponse } from 'next/server';
 
-//Create new email address in to MongoDB
+//Create new email address in to MongoDB -> for the landing page
 export async function POST(req) {
     await dbConnect(); 
   

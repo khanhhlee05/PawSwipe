@@ -55,13 +55,16 @@ export async function PATCH(req, { params }) {
       const value = data[key];
       
       if (key === "wishlist" || key === "swipedRight") {
+
         if (!Array.isArray(value)) {
           throw new Error('Invalid input value')
         }
         //check for existing in ID before adding
         let userList = user[key]
+
         for (const petId of value ){
           const addPet = await Pet.findOne({_id: petId})
+
           if (!addPet) {
             throw new Error(`Pet ${petId} doesn't exist`)
           } else {
@@ -69,12 +72,8 @@ export async function PATCH(req, { params }) {
           }
           user[key] = userList
         }
-      } else if (key === "adoptionHistory"){
-        /* TO DO:
-        add a handler if key is equal to ...
-        check for existance in adoption model
-        then add.. */
-      } else{
+
+      }  else{
 
       user[key] = value;
       }

@@ -66,10 +66,28 @@ const userSchema = new mongoose.Schema({
         required: [true, "Role must be valid"]
     },
 
-    adoptionHistory: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Adoption'
-    }],
+    preferences: {
+        minAge: {
+            type: mongoose.Schema.Types.String,
+            enum: ["puppy", "teen", "adult"]
+            
+        },
+        
+        breed: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Breed'
+        },
+        size: {
+            type: mongoose.Schema.Types.String,
+            enum: ['small', 'medium', 'large']
+        },
+        gender: {
+            type: mongoose.Schema.Types.String,
+            enum: ['male', 'female']
+        }
+//ADD MORE IF HAVE IDEA 
+
+    },
 
     wishlist: [{
         type: mongoose.Schema.Types.ObjectId,
