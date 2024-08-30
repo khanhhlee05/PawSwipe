@@ -25,7 +25,11 @@ const shelterSchema = new mongoose.Schema({
     phoneNumber: {
         type: mongoose.Schema.Types.String,
         required: [true, 'Phone number is required'],
-        unique: true
+        unique: true,
+        validate: {
+            validator: (value) => validator.isMobilePhone(value),
+            message: 'Phone number must be valid'
+        }
     },
     address:{
         street: {
