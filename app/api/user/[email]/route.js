@@ -95,3 +95,27 @@ export async function PATCH(req, { params }) {
 
 
 }
+
+//delete specific user from the database
+
+export async function DELETE(req, { params }) {
+  await dbConnect();
+
+  const { email } = params;
+
+  if (!email) {
+    return new NextResponse('Invalid request payload', { status: 400 });
+  }
+
+  try {
+    const user = await User.findOneAndDelete({ email });
+
+    if (!user) {
+      return new NextResponse('No user found', { status: 404 });
+    }
+
+    return new NextResponse('User deleted successfully', { status: 204 });
+  } catch (error) {
+    return new NextResponse('Server error', { status: 500 });
+  }
+}
