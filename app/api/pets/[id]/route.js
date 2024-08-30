@@ -1,7 +1,9 @@
 //This code allows us to mark the pet as adopted
-import dbConnect from '../../../../utils/dbConnect';
-import Pet from '../../../../models/Pet';
+import dbConnect from "@/lib/mongodb";
+import { Pet } from "@/mongoose/schema/Pet";
 
+
+//use to adopt a pet. change the status of the pet from not found to successfully adopted.
 export async function POST(req, { params }) {
   await dbConnect();
 
