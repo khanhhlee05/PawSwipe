@@ -16,7 +16,7 @@ export async function GET(req) {
   }
 }
 
-// Update the status of a pet to adopted in MongoDB --> should be in the user
+// Update the status of a pet to adopted in MongoDB --> should be in the user collection
 export async function POST(req) {
   await dbConnect();
 
