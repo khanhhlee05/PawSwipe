@@ -82,16 +82,13 @@ export default function Home() {
           flex: 1,
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center',
+          alignItems: 'left',
           justifyContent: 'top',
           padding: 2,
           mt: 8,
         }}>
           <Typography variant="h3" gutterBottom className="professional-text-subtitle" sx={{ mb: 4 }}>
-            Your intelligent flashcard maker
-          </Typography>
-          <Typography variant="h6" gutterBottom color="white" sx={{ mb: 3 }}>
-            ⚡️ Join the <strong>43</strong> people already using the app! ⚡️
+          Discover a smarter, more personalized way to find your perfect pet match.
           </Typography>
           
           <Button
@@ -108,131 +105,77 @@ export default function Home() {
               },
               mr: 3,
               fontSize: '1em',
+              width: "200px"
             }}
-            href="/generate"
+            href=""
           >
             Get Started
           </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            className="button glowing-border"
-            sx={{
-              backgroundColor: '#8A7D72',
-              borderRadius: '30px',
-              padding: '10px 20px',
-              textTransform: 'none',
-              '&:hover': {
-                backgroundColor: '#705E52',
-              },
-              fontSize: '1em',
-            }}
-            href="/flashcards"
-          >
-            Saved Flashcards
-          </Button>
+
+          <Box sx={{ mt: 4 }}>
+            <img 
+                src="image.jpg" // Replace with your image path
+                alt="Description of image"
+                style={{
+                width: '100%',       // Image will take up full width of its container
+                maxWidth: '800px',    // Increase the maximum width to make it bigger
+                borderRadius: '16px', // Add rounded corners with 16px radius
+                }}
+            />
+            </Box>
+
         </Box>
 
         <Box
           sx={{
-            width: '1px',
+            width: '1.5px',
             backgroundColor: 'white',
-            height: '60%',
+            height: '80%',
             margin: '0 16px',
             position: 'relative',
             top: '20px',
           }}
         ></Box>
 
-        <Box sx={{
-          flex: 1,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'top',
-          padding: 2,
-          mt: 8
-        }}>
-          <Typography variant="h4" className="professional-text-subtitle" sx={{ mb: 3 }}>Pricing</Typography>
-          <Grid container spacing={4}>
-            <Grid item xs={12} md={6}>
-              <Box sx={{
-                borderRadius: 5,
-                p: 2,
-                backgroundColor: 'transparent',
-                boxShadow: '0px 4px 20px rgba(135, 62, 113, 0.1), 0px 0px 10px rgba(128, 0, 128, 0.3)',
-              }}>
-                <Typography variant="h5" gutterBottom color="rgb(196, 164, 132)">
-                  Basic
-                </Typography>
-                <Typography variant="h6" gutterBottom color="rgb(196, 164, 132)">
-                  $0 / month
-                </Typography>
-                <Typography variant="body1" color="rgb(196, 164, 132)">
-                  Unlimited Flashcards w/o Storage.
-                </Typography>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  className="button-feedback glowing-border-feedback"
-                  sx={{
-                    backgroundColor: '#8A7D72',
-                    borderRadius: '30px',
-                    padding: '10px 20px',
-                    textTransform: 'none',
-                    '&:hover': {
-                      backgroundColor: '#705E52',
-                    },
-                    fontSize: '1em',
-                    mt: 2
-                  }}
-                  href="/generate"
-                >
-                  Get Basic
-                </Button>
-              </Box>
-            </Grid>
+        
 
-            <Grid item xs={12} md={6}>
-              <Box sx={{
-                borderRadius: 5,
-                p: 2,
-                backgroundColor: 'transparent',
-                boxShadow: '0px 4px 20px rgba(135, 62, 113, 0.1), 0px 0px 10px rgba(128, 0, 128, 0.3)',
-              }}>
-                <Typography variant="h5" gutterBottom color="rgb(196, 164, 132)">
-                  Pro
+        <Box sx={{ my: 6, mb: 10, mt: 10, mr: 5, ml: 5 }}>
+        <Grid container spacing={4} direction="column">
+            <Grid item xs={12} md={12}>
+            <Box sx={{ bgcolor: 'rgba(135, 62, 113, 0.4)', p: 3, borderRadius: 2, width: "500px" }}>
+                <Typography variant="h6" gutterBottom color="rgb(225, 218, 199)">
+                Title stat 1
                 </Typography>
-                <Typography variant="h6" gutterBottom color="rgb(196, 164, 132)">
-                  <span style={{ textDecoration: 'line-through', marginRight: '1rem' }}> $2.99</span> 0 / month
+                <Typography variant="body1" color="rgb(225, 218, 199)">
+                Content
                 </Typography>
-                <Typography variant="body1" color="rgb(196, 164, 132)">
-                  Unlimited Flashcards and Storage.
-                </Typography>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleSubmit}
-                  className="button-feedback glowing-border-feedback"
-                  sx={{
-                    backgroundColor: '#8A7D72',
-                    borderRadius: '30px',
-                    padding: '10px 20px',
-                    textTransform: 'none',
-                    '&:hover': {
-                      backgroundColor: '#705E52',
-                    },
-                    fontSize: '1em',
-                    mt: 2
-                  }}
-                  href="/generate"
-                >
-                  Get it now for free!
-                </Button>
-              </Box>
+            </Box>
             </Grid>
-          </Grid>
+            <Grid item xs={12} md={12}>
+            <Box sx={{ bgcolor: 'rgba(135, 62, 113, 0.4)', p: 3, borderRadius: 2 }}>
+                <Typography variant="h6" gutterBottom color="rgb(225, 218, 199)">
+                Title stat 2
+                </Typography>
+                <Typography variant="body1" color="rgb(225, 218, 199)">
+                Content
+                </Typography>
+            </Box>
+            </Grid>
+            <Grid item xs={12} md={12}>
+            <Box sx={{ bgcolor: 'rgba(135, 62, 113, 0.4)', p: 3, borderRadius: 2 }}>
+                <Typography variant="h6" gutterBottom color="rgb(225, 218, 199)">
+                Title stat 3
+                </Typography>
+                <Typography variant="body1" color="rgb(225, 218, 199)">
+                Content
+                </Typography>
+            </Box>
+            </Grid>
+        </Grid>
         </Box>
+
+
+        
       </Box>
     </Container>
   );
