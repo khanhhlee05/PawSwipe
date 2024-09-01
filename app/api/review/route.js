@@ -1,5 +1,6 @@
 import { Review } from "@/mongoose/schema/Review";
 import { User } from "@/mongoose/schema/User";
+import { Shelter } from "@/mongoose/schema/Shelter";
 import dbConnect from "@/lib/mongodb";
 import { NextResponse } from "next/server";
 
@@ -31,9 +32,12 @@ export async function POST(req){
             return new NextResponse("Invalid Request Payloaday ", { status: 404 })
         }
 
-        for (const key in data){
-            //TODO: validate existing shelter and user to avoid trash data
-        }
+        
+        
+            const myShelter = await Shelter.findById(data["shelter"])
+            if (!myShelter) {
+                return new NextResponse ("Invalid ShelterId", { status: 404 })
+            }
 
         const newReview = new Review(data)
         const savedReview = await newReview.save()
