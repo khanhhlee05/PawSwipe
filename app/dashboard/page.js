@@ -1,13 +1,9 @@
 'use client'
 
-import Header from "./Header.js";
-import PetCards from "./Cards.js";
-import { Container } from "@mui/material";
-export default function Dashboard() {
+import DashboardComponent from "../../components/dashboard/dashboard.tsx";
+
+export default function DashboardPage() {
   return (
-    <Container>
-      <Header />
-      <PetCards />
-    </Container>
+    <DashboardComponent />
   );
 }
