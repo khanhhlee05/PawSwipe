@@ -1,0 +1,44 @@
+/* Center the box on the page */
+.product-list-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .product-list-box {
+    width: 80%;
+    max-width: 1200px;
+    height: 500px;
+    padding: 20px;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  /* Container for the scrollable product list */
+  .products-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+  }
+  
+  .product-list-product-wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 items per row */
+    gap: 16px;
+    padding: 16px;
+  }
+  
+  .product-item {
+    padding: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    text-align: center;
+  }
+  
