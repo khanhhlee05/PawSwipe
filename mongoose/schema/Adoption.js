@@ -46,4 +46,4 @@ adoptionSchema.pre('save', async function (next) {
     next()
 })
 
-export const Adoption = mongoose.model('Adoption', adoptionSchema) || mongoose.models.Adoption
+export const Adoption =  mongoose.models.Adoption || mongoose.model('Adoption', adoptionSchema) 
