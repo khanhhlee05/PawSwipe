@@ -21,7 +21,7 @@ export async function GET(req) {
     }
 }
 
-//Create a new adoption in the database using transaction for atomicity
+//Create a new adoption in the database using transaction for atomicity //TODO: check this API
 export async function POST(req) {
     let session
 
