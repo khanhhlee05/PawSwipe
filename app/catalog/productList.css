@@ -1,44 +1,48 @@
-/* Center the box on the page */
+/* Center the box on the page and prevent page scrolling */
 .product-list-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 100%; /* Full height of its parent */
+    overflow: hidden; /* Prevents the page from scrolling */
   }
   
   .product-list-box {
-    width: 80%;
-    max-width: 1200px;
-    height: 500px;
+    width: 100%;
+    height: 100%;
     padding: 20px;
-    background-color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.2);
     border: 1px solid #ccc;
     border-radius: 8px;
-    overflow: hidden;
+    overflow: hidden; /* Ensures the catalog is within the box */
   }
   
   /* Container for the scrollable product list */
   .products-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height: 100%;
-    width: 100%;
-    overflow-y: auto;
+    overflow-y: auto; /* Enables vertical scrolling within the catalog */
   }
   
+  /* Grid setup for products */
   .product-list-product-wrapper {
     display: grid;
     grid-template-columns: repeat(4, 1fr); /* 4 items per row */
     gap: 16px;
     padding: 16px;
+    grid-auto-rows: 200px; /* Adjusts the height of each row in the grid */
   }
   
+  /* Individual product item styling */
   .product-item {
     padding: 16px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    background-color: #f9f9f9;
+    background-color: rgba(255, 255, 255, 0.4);
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer; /* Optional: Shows pointer cursor on hover */
   }
   
