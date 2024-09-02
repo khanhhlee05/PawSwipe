@@ -1,28 +1,32 @@
 "use client";
 
-import { Button, Box, Container, Typography, TextField } from "@mui/material";
-import React from "react";
+import {
+  Button,
+  Box,
+  Container,
+  Typography,
+  TextField,
+  Snackbar,
+  Alert,
+} from "@mui/material";
+import React, { useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, useFormContext, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 const formSchema = z
   .object({
     email: z
       .string()
-      .min(1, {
-        message: "This field has to be filled.",
-      })
+      .min(1, "This field has to be filled.")
       .email("This is not a valid email.")
-      .max(100, {
-        message: "Email can't be longer than 100 characters.",
-      }),
+      .max(100, "Email can't be longer than 100 characters."),
     password: z
       .string()
-      .min(6, { message: "Password has to be at least 6 characters long." }),
+      .min(6, "Password has to be at least 6 characters long."),
     confirmPassword: z
       .string()
-      .min(6, { message: "Password has to be at least 6 characters long." }),
+      .min(6, "Password has to be at least 6 characters long."),
   })
   .superRefine(({ confirmPassword, password }, ctx) => {
     if (confirmPassword !== password) {
@@ -33,28 +37,61 @@ const formSchema = z
       });
     }
   });
-
+type formData = z.infer<typeof formSchema>;
 const RegisterForm = () => {
   const {
     register,
-    formState: { errors },
+    formState: { errors, touchedFields },
     handleSubmit,
-  } = useForm<z.infer<typeof formSchema>>({
+  } = useForm<formData>({
     resolver: zodResolver(formSchema),
-    defaultValues: {},
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
 
-//   const handleSubmit = useFormContext<z.infer<typeof formSchema>>();
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "error">(
+    "success"
+  );
 
-  const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = (values: z.infer<typeof formSchema>) => {
-    console.log(values.email);
+  async function onSubmit(values: formData) {
+    try {
+      const response = await fetch("api/auth/register", {
+        method: "POST",
+        body: JSON.stringify(values),
+      });
+      const data = await response.json();
+
+      if (data.error) {
+        setSnackbarMessage("Registration failed. Please try again.");
+        setSnackbarSeverity("error");
+      } else {
+        setSnackbarMessage("Registration successful!");
+        setSnackbarSeverity("success");
+      }
+      setSnackbarOpen(true);
+    } catch (error) {
+      setSnackbarMessage("Registration failed. Please try again.");
+      console.error("Registration error:", error);
+      setSnackbarSeverity("error");
+      setSnackbarOpen(true);
+    }
   }
-//   function onSubmit(values: z.infer<typeof formSchema>) {
-//     // Do something with the form values.
-//     // ✅ This will be type-safe and validated.
-//     console.log("this was called");
-//     console.log(values);
-//   }
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
+
+  /* 
+  Useful to have this function to test for validation behavior
+  const onError = (errors) => {
+    console.log("Form submission failed due to validation errors:", errors);
+  };
+
+  console.log("Current form state:", { errors, touchedFields, isSubmitting }); */
 
   return (
     <Container
@@ -70,6 +107,7 @@ const RegisterForm = () => {
       <Box
         component="form"
         onSubmit={handleSubmit(onSubmit)}
+        noValidate
         sx={{
           width: "100%",
           maxWidth: "400px",
@@ -86,18 +124,20 @@ const RegisterForm = () => {
           required
           label="Email"
           {...register("email")}
-          error={!!errors.email}
+          error={!!errors.email && touchedFields.email}
           helperText={errors.email?.message}
           InputLabelProps={{
             shrink: true,
           }}
           placeholder="pawswipe@whatever.com"
         />
-        {/* <TextField
+        <TextField
           fullWidth
           label="Password"
           type="password"
-          {...form.register("password")}
+          {...register("password")}
+          error={!!errors.password && touchedFields.password}
+          helperText={errors.password?.message}
           required
           InputLabelProps={{
             shrink: true,
@@ -106,15 +146,17 @@ const RegisterForm = () => {
         />
         <TextField
           fullWidth
-          label="Confirm Password" 
+          label="Confirm Password"
           type="password"
           required
-          {...form.register("confirmPassword")} 
+          error={!!errors.confirmPassword && touchedFields.confirmPassword}
+          helperText={errors.confirmPassword?.message}
+          {...register("confirmPassword")}
           InputLabelProps={{
             shrink: true,
           }}
           placeholder="Confirm your password"
-        /> */}
+        />
         <Box
           sx={{
             display: "flex",
@@ -137,6 +179,20 @@ const RegisterForm = () => {
           </Button>
         </Box>
       </Box>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      >
+        <Alert
+          onClose={handleSnackbarClose}
+          severity={snackbarSeverity}
+          sx={{ width: "100%" }}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </Container>
   );
 };
