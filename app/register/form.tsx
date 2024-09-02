@@ -51,18 +51,38 @@ const RegisterForm = () => {
     },
   });
 
-  async function onSubmit(values: formData) {
-    console.log(values);
-    const response = await fetch("api/auth/register", {
-      method: "POST",
-      body: JSON.stringify(values),
-    });
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "error">(
+    "success"
+  );
 
-    const data = await response.json();
-    // if (data.error) {
-    
-    // } 
+  async function onSubmit(values: formData) {
+    try {
+      const response = await fetch("api/auth/register", {
+        method: "POST",
+        body: JSON.stringify(values),
+      });
+      const data = await response.json();
+
+      if (data.error) {
+        setSnackbarMessage("Registration failed. Please try again.");
+        setSnackbarSeverity("error");
+      } else {
+        setSnackbarMessage("Registration successful!");
+        setSnackbarSeverity("success");
+      }
+      setSnackbarOpen(true);
+    } catch (error) {
+      setSnackbarMessage("Registration failed. Please try again.");
+      setSnackbarSeverity("error");
+      setSnackbarOpen(true);
+    }
   }
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
 
   /* 
   Useful to have this function to test for validation behavior
@@ -83,16 +103,6 @@ const RegisterForm = () => {
         alignItems: "center",
       }}
     >
-      {/* <Snackbar
-        open={open}
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-        autoHideDuration={3000}
-        onClose={handleClose}
-      >
-        <Alert onClose={handleClose} severity={severity} sx={{ width: "100%" }}>
-          {message}
-        </Alert>
-      </Snackbar> */}
       <Box
         component="form"
         onSubmit={handleSubmit(onSubmit)}
@@ -168,6 +178,20 @@ const RegisterForm = () => {
           </Button>
         </Box>
       </Box>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      >
+        <Alert
+          onClose={handleSnackbarClose}
+          severity={snackbarSeverity}
+          sx={{ width: "100%" }}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </Container>
   );
 };
