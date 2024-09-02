@@ -75,6 +75,7 @@ const RegisterForm = () => {
       setSnackbarOpen(true);
     } catch (error) {
       setSnackbarMessage("Registration failed. Please try again.");
+      console.error("Registration error:", error);
       setSnackbarSeverity("error");
       setSnackbarOpen(true);
     }
