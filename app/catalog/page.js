@@ -63,13 +63,13 @@ const PetList = () => {
           backdropFilter: 'blur(10px)',
           boxShadow: 'none',
           width: '100%',
-          maxWidth: '1200px',
-          height: '700px',
+          maxWidth: '1500px',
+          height: '800px',
           display: 'flex',
           flexDirection: 'column',
         }}
       >
-        <AppBar position="static" sx={{ backgroundColor: 'transparent', width: '100%', mb: 5 }}>
+        <AppBar position="static" sx={{ backgroundColor: 'transparent', width: '100%', mb: 5, borderRadius: 2 }}>
           <Toolbar>
             <Typography className="professional-text-title" sx={{ fontSize: { xs: '2rem', sm: '3rem', mt: 5 }, flexGrow: 1 }}>
               PawSwipe
