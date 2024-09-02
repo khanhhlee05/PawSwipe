@@ -7,10 +7,6 @@ const userSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.String,
     required: [true, "Email is required"],
     unique: true,
-    validate: {
-      validator: (value) => validator.isEmail(value),
-      message: "Email must be valid",
-    },
   },
   firstName: {
     type: mongoose.Schema.Types.String,
@@ -28,7 +24,6 @@ const userSchema = new mongoose.Schema({
   password: {
     type: mongoose.Schema.Types.String,
     required: [true, "Password is required"],
-    minlength: [8, "Password must be at least 8 characters long"],
   },
   swipedRight: [
     {
