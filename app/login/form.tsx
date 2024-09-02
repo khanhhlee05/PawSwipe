@@ -14,6 +14,8 @@ import React, { useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const formSchema = z
   .object({
@@ -25,21 +27,10 @@ const formSchema = z
     password: z
       .string()
       .min(6, "Password has to be at least 6 characters long."),
-    confirmPassword: z
-      .string()
-      .min(6, "Password has to be at least 6 characters long."),
   })
-  .superRefine(({ confirmPassword, password }, ctx) => {
-    if (confirmPassword !== password) {
-      ctx.addIssue({
-        code: "custom",
-        message: "The passwords did not match.",
-        path: ["confirmPassword"],
-      });
-    }
-  });
+
 type formData = z.infer<typeof formSchema>;
-const RegisterForm = () => {
+const LoginForm = () => {
   const {
     register,
     formState: { errors, touchedFields },
@@ -52,30 +43,35 @@ const RegisterForm = () => {
     },
   });
 
+  const router = useRouter();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "error">(
     "success"
   );
 
+  
+
   async function onSubmit(values: formData) {
     try {
-      const response = await fetch("api/auth/register", {
-        method: "POST",
-        body: JSON.stringify(values),
+      const response = await signIn("credentials", {
+        email: values.email,
+        password: values.password,
+        redirect: false
       });
-      const data = await response.json();
+      console.log(response)
 
-      if (data.error) {
-        setSnackbarMessage("Registration failed. Please try again.");
-        setSnackbarSeverity("error");
-      } else {
-        setSnackbarMessage("Registration successful!");
+      if (!response?.error) {
+        router.push("dashboard")
+        setSnackbarMessage("You are now signed in!");
         setSnackbarSeverity("success");
+      } else {
+        setSnackbarMessage("Login failed. Please try again.");
+        setSnackbarSeverity("error");
       }
       setSnackbarOpen(true);
     } catch (error) {
-      setSnackbarMessage("Registration failed. Please try again.");
+      setSnackbarMessage("Login failed. Please try again.");
       setSnackbarSeverity("error");
       setSnackbarOpen(true);
     }
@@ -117,15 +113,15 @@ const RegisterForm = () => {
         }}
       >
         <Typography variant="h5" component="h1" gutterBottom sx={{ fontWeight: 'medium' }}>
-          Register
+          Login
         </Typography>
         <TextField
           fullWidth
           required
           label="Email"
           {...register("email")}
-          error={!!errors.email && touchedFields.email}
-          helperText={errors.email?.message}
+        //   error={!!errors.email && touchedFields.email}
+        //   helperText={errors.email?.message}
           InputLabelProps={{
             shrink: true,
           }}
@@ -136,26 +132,13 @@ const RegisterForm = () => {
           label="Password"
           type="password"
           {...register("password")}
-          error={!!errors.password && touchedFields.password}
-          helperText={errors.password?.message}
+        //   error={!!errors.password && touchedFields.password}
+        //   helperText={errors.password?.message}
           required
           InputLabelProps={{
             shrink: true,
           }}
           placeholder="Enter your password"
-        />
-        <TextField
-          fullWidth
-          label="Confirm Password"
-          type="password"
-          required
-          error={!!errors.confirmPassword && touchedFields.confirmPassword}
-          helperText={errors.confirmPassword?.message}
-          {...register("confirmPassword")}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          placeholder="Confirm your password"
         />
         <Box
           sx={{
@@ -164,7 +147,7 @@ const RegisterForm = () => {
             justifyContent: "flex-start",
           }}
         >
-          <Link href={"/login"} underline="none" color={"black"}>Already have an account?</Link>
+          <Link href={"/register"} underline="none" color={"black"}>Need an account?</Link>
           <Button
             variant="contained"
             size="small"
@@ -199,4 +182,4 @@ const RegisterForm = () => {
   );
 };
 
-export default RegisterForm;
+export default LoginForm;
