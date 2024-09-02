@@ -1,6 +1,6 @@
-"use client";  // Ensures it's treated as a Client Component
-
-import { Container, Box, AppBar, Toolbar, Typography } from "@mui/material";
+"use client";  
+import { useState } from "react";
+import { Container, Box, AppBar, Toolbar, Typography, TextField, MenuItem, Select, FormControl, InputLabel } from "@mui/material";
 import './productList.css';
 
 // Sample data
@@ -18,11 +18,28 @@ const samplePets = [
 ];
 
 const handlePetClick = (pet) => {
-  // Action to perform on click
   alert(`Clicked on ${pet.name}`);
 };
 
 const PetList = () => {
+  const [selectedBreed, setSelectedBreed] = useState("");
+  const [minAge, setMinAge] = useState("");
+
+  const handleBreedChange = (event) => {
+    setSelectedBreed(event.target.value);
+  };
+
+  const handleMinAgeChange = (event) => {
+    setMinAge(event.target.value);
+  };
+
+  const filteredPets = samplePets.filter((pet) => {
+    return (
+      (selectedBreed === "" || pet.breed === selectedBreed) &&
+      (minAge === "" || parseInt(pet.age) >= parseInt(minAge))
+    );
+  });
+
   return (
     <Container
       maxWidth="100vw"
@@ -31,7 +48,7 @@ const PetList = () => {
         background: "radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%)",
         backgroundPosition: 'center',
         minHeight: '100vh',
-        overflow: 'hidden', // Prevent page scrolling
+        overflow: 'hidden', 
         py: 4,
         display: 'flex',
         justifyContent: 'center',
@@ -52,21 +69,45 @@ const PetList = () => {
           flexDirection: 'column',
         }}
       >
-        <AppBar position="static" sx={{ backgroundColor: 'transparent', width: '100%', mb:5}}>
+        <AppBar position="static" sx={{ backgroundColor: 'transparent', width: '100%', mb: 5 }}>
           <Toolbar>
-            <Typography className="professional-text-title"
-              sx={{ fontSize: { xs: '2rem', sm: '3rem', mt: 5}, flexGrow: 1 }}
-            >
+            <Typography className="professional-text-title" sx={{ fontSize: { xs: '2rem', sm: '3rem', mt: 5 }, flexGrow: 1 }}>
               PawSwipe
             </Typography>
           </Toolbar>
         </AppBar>
 
+        <Box sx={{ display: 'flex', justifyContent: 'space-around', mb: 3 }}>
+          <FormControl variant="outlined" sx={{ minWidth: 120 }}>
+            <InputLabel>Breed</InputLabel>
+            <Select
+              value={selectedBreed}
+              onChange={handleBreedChange}
+              label="Breed"
+            >
+              <MenuItem value=""><em>All</em></MenuItem>
+              <MenuItem value="Labrador">Labrador</MenuItem>
+              <MenuItem value="German Shepherd">German Shepherd</MenuItem>
+              <MenuItem value="Golden Retriever">Golden Retriever</MenuItem>
+              <MenuItem value="Bulldog">Bulldog</MenuItem>
+              {/* Add more breed options */}
+            </Select>
+          </FormControl>
+
+          <TextField
+            label="Minimum Age"
+            type="number"
+            value={minAge}
+            onChange={handleMinAgeChange}
+            variant="outlined"
+          />
+        </Box>
+
         <div className="product-list-container">
           <div className="product-list-box">
             <section className="products-container">
               <div className="product-list-product-wrapper">
-                {samplePets.map((pet) => (
+                {filteredPets.map((pet) => (
                   <div
                     key={pet.id}
                     className="product-item"
