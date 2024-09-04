@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: mongoose.Schema.Types.String,
-    required: [true, "Password is required"],
+    // required: [true, "Password is required"],
   },
   swipedRight: [
     {
@@ -106,6 +106,9 @@ const userSchema = new mongoose.Schema({
 userSchema.pre("save", function (next) {
   this.updatedAt = Date.now();
   const salt = bcrypt.genSaltSync();
+  if (!this.password) {
+    next();
+  }
   this.password = bcrypt.hashSync(this.password, salt);
   next();
 });

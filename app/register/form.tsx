@@ -177,7 +177,7 @@ const RegisterForm = () => {
             }}
             type="submit"
           >
-            Submit
+            Sign Up
           </Button>
         </Box>
       </Box>

@@ -33,7 +33,7 @@ export const authOptions: NextAuthOptions = {
             email: user?.email,
           };
         } catch (error) {
-          console.error(error.message)
+          console.error(error.message);
           return null; // Return null if login fails
         }
       },
@@ -45,6 +45,28 @@ export const authOptions: NextAuthOptions = {
         return { ...token, ...session.user };
       }
       return { ...token, ...user };
+    },
+    async signIn({ user, account, profile }) {
+      await dbConnect(); // Ensure DB connection
+      const existingUser = await User.findOne({ email: user.email });
+
+      if (!existingUser) {
+        // Create a new user if they don't exist
+        const nameParts = user.name.split(" ");
+        const newUser = new User({
+          firstName: nameParts[0],
+          lastName: nameParts[1],
+          email: user.email,
+        });
+        try {
+          await newUser.save();
+        } catch (error) {
+          console.error("Error saving new user:", error);
+          return false; // Prevent sign in on error
+        }
+      }
+
+      return true; // Allow sign in
     },
   },
 };
