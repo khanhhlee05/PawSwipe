@@ -23,23 +23,28 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials, req) {
         await dbConnect();
 
-        // const users = await User.find()
-        const user = await User.findOne({
-          /* specify your credentials here */
-        });
-        if (!user) {
-          return null;
+        try {
+          const user = await (User as any).login(
+            credentials.email,
+            credentials.password
+          );
+          return {
+            id: user?._id,
+            email: user?.email,
+          };
+        } catch (error) {
+          console.error(error.message)
+          return null; // Return null if login fails
         }
-
-        return user;
-        // return new NextResponse(JSON.stringify(users), {
-        return new NextResponse(JSON.stringify(user), {
-          status: 200,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
       },
     }),
   ],
+  callbacks: {
+    jwt: async ({ user, token, trigger, session }) => {
+      if (trigger === "update") {
+        return { ...token, ...session.user };
+      }
+      return { ...token, ...user };
+    },
+  },
 };
