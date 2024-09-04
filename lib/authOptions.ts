@@ -23,23 +23,37 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials, req) {
         await dbConnect();
 
-        // const users = await User.find()
         const user = await User.findOne({
-          /* specify your credentials here */
+          email: credentials?.email,
         });
+
         if (!user) {
-          return null;
+          return new NextResponse("User doesn't exist!", { status: 400 });
         }
 
+        /* Todo: Add the credentials comparison for the db password and the credentials password */
         return user;
-        // return new NextResponse(JSON.stringify(users), {
-        return new NextResponse(JSON.stringify(user), {
-          status: 200,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
       },
     }),
   ],
+  callbacks: {
+    async signIn({ user, account, profile }) {
+      await dbConnect(); // Ensure DB connection
+      const existingUser = await User.findOne({ email: user.email });
+      
+      if (!existingUser) {
+        // Create a new user if they don't exist
+        const nameParts = user.name.split(" ")
+        console.log(nameParts)
+        const newUser = new User({
+          firstName: nameParts[0],
+          lastName: nameParts[1],
+          email: user.email,
+        });
+        await newUser.save();
+      }
+
+      return true; // Allow sign in
+    },
+  },
 };

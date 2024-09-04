@@ -10,6 +10,7 @@ import {
   Alert,
   Link,
 } from "@mui/material";
+import { Google } from "@mui/icons-material";
 import React, { useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -17,17 +18,14 @@ import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-const formSchema = z
-  .object({
-    email: z
-      .string()
-      .min(1, "This field has to be filled.")
-      .email("This is not a valid email.")
-      .max(100, "Email can't be longer than 100 characters."),
-    password: z
-      .string()
-      .min(6, "Password has to be at least 6 characters long."),
-  })
+const formSchema = z.object({
+  email: z
+    .string()
+    .min(1, "This field has to be filled.")
+    .email("This is not a valid email.")
+    .max(100, "Email can't be longer than 100 characters."),
+  password: z.string().min(6, "Password has to be at least 6 characters long."),
+});
 
 type formData = z.infer<typeof formSchema>;
 const LoginForm = () => {
@@ -50,19 +48,17 @@ const LoginForm = () => {
     "success"
   );
 
-  
-
   async function onSubmit(values: formData) {
     try {
       const response = await signIn("credentials", {
         email: values.email,
         password: values.password,
-        redirect: false
+        redirect: false,
       });
-      console.log(response)
+      console.log(response);
 
       if (!response?.error) {
-        router.push("dashboard")
+        router.push("dashboard");
         setSnackbarMessage("You are now signed in!");
         setSnackbarSeverity("success");
       } else {
@@ -112,7 +108,12 @@ const LoginForm = () => {
           gap: 3,
         }}
       >
-        <Typography variant="h5" component="h1" gutterBottom sx={{ fontWeight: 'medium' }}>
+        <Typography
+          variant="h5"
+          component="h1"
+          gutterBottom
+          sx={{ fontWeight: "medium" }}
+        >
           Login
         </Typography>
         <TextField
@@ -120,8 +121,8 @@ const LoginForm = () => {
           required
           label="Email"
           {...register("email")}
-        //   error={!!errors.email && touchedFields.email}
-        //   helperText={errors.email?.message}
+          //   error={!!errors.email && touchedFields.email}
+          //   helperText={errors.email?.message}
           InputLabelProps={{
             shrink: true,
           }}
@@ -132,8 +133,8 @@ const LoginForm = () => {
           label="Password"
           type="password"
           {...register("password")}
-        //   error={!!errors.password && touchedFields.password}
-        //   helperText={errors.password?.message}
+          //   error={!!errors.password && touchedFields.password}
+          //   helperText={errors.password?.message}
           required
           InputLabelProps={{
             shrink: true,
@@ -147,7 +148,30 @@ const LoginForm = () => {
             justifyContent: "flex-start",
           }}
         >
-          <Link href={"/register"} underline="none" color={"black"}>Need an account?</Link>
+          <Link href={"/register"} underline="none" color={"black"}>
+            Need an account?
+          </Link>
+          <Button
+            onClick={() =>
+              signIn("google", {
+                callbackUrl: "/dashboard", 
+                redirect: false,
+                popup: true,
+              })
+            }
+            variant="contained"
+            size="small"
+            sx={{
+              marginTop: 2,
+              padding: "5px 0",
+              fontSize: "1rem",
+              width: "auto",
+              textTransform: "none",
+            }}
+            startIcon={<Google />}
+          >
+            Sign in with Google
+          </Button>
           <Button
             variant="contained"
             size="small"
@@ -160,7 +184,7 @@ const LoginForm = () => {
             }}
             type="submit"
           >
-            Submit
+            Login
           </Button>
         </Box>
       </Box>
