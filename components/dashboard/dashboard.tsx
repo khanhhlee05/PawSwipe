@@ -9,7 +9,7 @@ const DashboardComponent = () => {
   const { data: session } = useSession();
   return (
     <Container>
-      {session ? (
+      {1===1 ? (
         <div>
           <Header />
           <PetCards />
