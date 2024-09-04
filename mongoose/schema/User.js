@@ -109,7 +109,7 @@ userSchema.pre("save", function (next) {
   if (!this.password) {
     next();
   }
-  this.password = bcrypt.hashSync(this.password, salt);
+  this.password = bcrypt.hashSync(this.password.trim(), salt);
   next();
 });
 
@@ -122,7 +122,7 @@ userSchema.statics.login = async function (email, password){
       }
       throw Error("Incorrect Password")
   }
-  throw Error("Incorrect Email")
+  throw Error("This email was not found.")
 }
 
 

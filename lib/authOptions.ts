@@ -33,8 +33,8 @@ export const authOptions: NextAuthOptions = {
             email: user?.email,
           };
         } catch (error) {
-          console.error(error.message);
-          return null; // Return null if login fails
+          console.error(error)
+          throw new Error(error.message)
         }
       },
     }),
@@ -46,7 +46,7 @@ export const authOptions: NextAuthOptions = {
       }
       return { ...token, ...user };
     },
-    async signIn({ user, account, profile }) {
+    signIn: async ({ user, account, profile }) => {
       await dbConnect(); // Ensure DB connection
       const existingUser = await User.findOne({ email: user.email });
 

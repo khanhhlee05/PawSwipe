@@ -14,6 +14,7 @@ import React, { useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 const formSchema = z
   .object({
@@ -58,6 +59,7 @@ const RegisterForm = () => {
     "success"
   );
 
+  const router = useRouter();
   async function onSubmit(values: formData) {
     try {
       const response = await fetch("api/auth/register", {
@@ -72,6 +74,7 @@ const RegisterForm = () => {
       } else {
         setSnackbarMessage("Registration successful!");
         setSnackbarSeverity("success");
+        router.push('/login');
       }
       setSnackbarOpen(true);
     } catch (error) {

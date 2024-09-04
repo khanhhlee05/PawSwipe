@@ -55,19 +55,16 @@ const LoginForm = () => {
         password: values.password,
         redirect: false,
       });
-      console.log(response);
 
       if (!response?.error) {
         router.push("dashboard");
-        setSnackbarMessage("You are now signed in!");
-        setSnackbarSeverity("success");
       } else {
-        setSnackbarMessage("Login failed. Please try again.");
+        setSnackbarMessage(response.error);
         setSnackbarSeverity("error");
       }
       setSnackbarOpen(true);
     } catch (error) {
-      setSnackbarMessage("Login failed. Please try again.");
+      setSnackbarMessage(error.message || "Login failed. Please try again.");
       setSnackbarSeverity("error");
       setSnackbarOpen(true);
     }
@@ -83,7 +80,8 @@ const LoginForm = () => {
     console.log("Form submission failed due to validation errors:", errors);
   };
 
-  console.log("Current form state:", { errors, touchedFields, isSubmitting }); */
+  console.log("Current form state:", { errors, touchedFields, isSubmitting }); 
+  */
 
   return (
     <Container
