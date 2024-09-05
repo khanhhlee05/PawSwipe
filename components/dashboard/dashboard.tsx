@@ -21,7 +21,7 @@ const DashboardComponent = () => {
   
   return (
     <Container>
-      {session ? (
+      {1===1 ? (
         <div>
           <Header />
           <PetCards />

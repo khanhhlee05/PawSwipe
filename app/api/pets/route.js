@@ -9,7 +9,8 @@ export async function GET(req) {
   await dbConnect();
 
   try {
-    const pets = await Pet.find({ isAdopted: false }).limit(20);
+    //const pets = await Pet.find({ isAdopted: false }).limit(20);
+    const pets = await Pet.find().limit(20); // for swiping testing purposes
     return new Response(JSON.stringify(pets), { status: 200 });
   } catch (error) {
     return new Response(JSON.stringify({ error: error.message }), { status: 500 });
