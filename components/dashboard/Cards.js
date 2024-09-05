@@ -19,8 +19,32 @@ const PetCards = () => {
           method: "GET",
         });
         const data = await response.json();
-        setPets(data);
-        setCurrentIndex(data.length - 1);
+        console.log(data)
+
+        const email = user?.email
+
+      try{
+        const myUser = await fetch(`/api/user/${email}`,
+          {
+            method: "GET",
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        )
+
+        const dataUser = await myUser.json();
+        let wishList = dataUser.wishlist
+       
+        let filteredData = data.filter((p) => !wishList.includes(p._id))
+       
+        setPets(filteredData);
+        setCurrentIndex(filteredData.length - 1);
+      }catch(error){
+        console.error("Error fetching user:", error);
+      }
+
+        
       } catch (error) {
         console.error("Error fetching pets:", error);
       }
