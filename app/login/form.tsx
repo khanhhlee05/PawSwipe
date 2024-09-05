@@ -10,37 +10,25 @@ import {
   Alert,
   Link,
 } from "@mui/material";
+import { Google } from "@mui/icons-material";
 import React, { useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-const formSchema = z
-  .object({
-    email: z
-      .string()
-      .min(1, "This field has to be filled.")
-      .email("This is not a valid email.")
-      .max(100, "Email can't be longer than 100 characters."),
-    password: z
-      .string()
-      .min(6, "Password has to be at least 6 characters long."),
-    confirmPassword: z
-      .string()
-      .min(6, "Password has to be at least 6 characters long."),
-  })
-  .superRefine(({ confirmPassword, password }, ctx) => {
-    if (confirmPassword !== password) {
-      ctx.addIssue({
-        code: "custom",
-        message: "The passwords did not match.",
-        path: ["confirmPassword"],
-      });
-    }
-  });
+const formSchema = z.object({
+  email: z
+    .string()
+    .min(1, "This field has to be filled.")
+    .email("This is not a valid email.")
+    .max(100, "Email can't be longer than 100 characters."),
+  password: z.string().min(6, "Password has to be at least 6 characters long."),
+});
+
 type formData = z.infer<typeof formSchema>;
-const RegisterForm = () => {
+const LoginForm = () => {
   const {
     register,
     formState: { errors, touchedFields },
@@ -53,32 +41,30 @@ const RegisterForm = () => {
     },
   });
 
+  const router = useRouter();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "error">(
     "success"
   );
 
-  const router = useRouter();
   async function onSubmit(values: formData) {
     try {
-      const response = await fetch("api/auth/register", {
-        method: "POST",
-        body: JSON.stringify(values),
+      const response = await signIn("credentials", {
+        email: values.email,
+        password: values.password,
+        redirect: false,
       });
-      const data = await response.json();
 
-      if (data.error) {
-        setSnackbarMessage("Registration failed. Please try again.");
-        setSnackbarSeverity("error");
+      if (!response?.error) {
+        router.push("dashboard");
       } else {
-        setSnackbarMessage("Registration successful!");
-        setSnackbarSeverity("success");
-        router.push('/login');
+        setSnackbarMessage(response.error);
+        setSnackbarSeverity("error");
       }
       setSnackbarOpen(true);
     } catch (error) {
-      setSnackbarMessage("Registration failed. Please try again.");
+      setSnackbarMessage(error.message || "Login failed. Please try again.");
       setSnackbarSeverity("error");
       setSnackbarOpen(true);
     }
@@ -94,7 +80,8 @@ const RegisterForm = () => {
     console.log("Form submission failed due to validation errors:", errors);
   };
 
-  console.log("Current form state:", { errors, touchedFields, isSubmitting }); */
+  console.log("Current form state:", { errors, touchedFields, isSubmitting }); 
+  */
 
   return (
     <Container
@@ -119,16 +106,21 @@ const RegisterForm = () => {
           gap: 3,
         }}
       >
-        <Typography variant="h5" component="h1" gutterBottom sx={{ fontWeight: 'medium' }}>
-          Register
+        <Typography
+          variant="h5"
+          component="h1"
+          gutterBottom
+          sx={{ fontWeight: "medium" }}
+        >
+          Login
         </Typography>
         <TextField
           fullWidth
           required
           label="Email"
           {...register("email")}
-          error={!!errors.email && touchedFields.email}
-          helperText={errors.email?.message}
+          //   error={!!errors.email && touchedFields.email}
+          //   helperText={errors.email?.message}
           InputLabelProps={{
             shrink: true,
           }}
@@ -139,26 +131,13 @@ const RegisterForm = () => {
           label="Password"
           type="password"
           {...register("password")}
-          error={!!errors.password && touchedFields.password}
-          helperText={errors.password?.message}
+          //   error={!!errors.password && touchedFields.password}
+          //   helperText={errors.password?.message}
           required
           InputLabelProps={{
             shrink: true,
           }}
           placeholder="Enter your password"
-        />
-        <TextField
-          fullWidth
-          label="Confirm Password"
-          type="password"
-          required
-          error={!!errors.confirmPassword && touchedFields.confirmPassword}
-          helperText={errors.confirmPassword?.message}
-          {...register("confirmPassword")}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          placeholder="Confirm your password"
         />
         <Box
           sx={{
@@ -167,7 +146,30 @@ const RegisterForm = () => {
             justifyContent: "flex-start",
           }}
         >
-          <Link href={"/login"} underline="none" color={"black"}>Already have an account?</Link>
+          <Link href={"/register"} underline="none" color={"black"}>
+            Need an account?
+          </Link>
+          <Button
+            onClick={() =>
+              signIn("google", {
+                callbackUrl: "/dashboard", 
+                redirect: false,
+                popup: true,
+              })
+            }
+            variant="contained"
+            size="small"
+            sx={{
+              marginTop: 2,
+              padding: "5px 0",
+              fontSize: "1rem",
+              width: "auto",
+              textTransform: "none",
+            }}
+            startIcon={<Google />}
+          >
+            Sign in with Google
+          </Button>
           <Button
             variant="contained"
             size="small"
@@ -180,7 +182,7 @@ const RegisterForm = () => {
             }}
             type="submit"
           >
-            Sign Up
+            Login
           </Button>
         </Box>
       </Box>
@@ -202,4 +204,4 @@ const RegisterForm = () => {
   );
 };
 
-export default RegisterForm;
+export default LoginForm;

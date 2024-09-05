@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
   return (
     <SessionWrapper>
       <html lang="en">
-        <body className={inter.className}>
+        <body id="__next" className={inter.className}>
           {children}
           <Analytics />
         </body>

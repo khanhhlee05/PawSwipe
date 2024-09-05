@@ -8,13 +8,11 @@ export async function POST(request: Request) {
   try {
     const { email, password } = await request.json();
     const data = { email, password };
-    console.log(data);
     if (!data) {
       return new NextResponse("Invalid request payload", { status: 400 });
     }
 
     const user = new User(data);
-    console.log(user)
     const savedUser = await user.save();
     if (!savedUser) {
       return new NextResponse("Failed to save user", { status: 500 });
