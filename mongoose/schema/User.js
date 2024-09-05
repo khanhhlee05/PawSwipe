@@ -25,12 +25,7 @@ const userSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.String,
     // required: [true, "Password is required"],
   },
-  swipedRight: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Pet",
-    },
-  ],
+ 
   phoneNumber: {
     type: mongoose.Schema.Types.String,
     validate: {
