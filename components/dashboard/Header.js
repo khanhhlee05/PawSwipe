@@ -22,7 +22,7 @@ import { useSession, signOut } from "next-auth/react";
 
 export default function Header() {
   const [anchorEl, setAnchorEl] = useState(null);
-
+  const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -50,7 +50,7 @@ export default function Header() {
         <Menu
           anchorEl={anchorEl}
           id="account-menu"
-          open={Boolean(anchorEl)}
+          open={open}
           onClose={handleClose}
           onClick={handleClose}
           paper={{

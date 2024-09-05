@@ -10,7 +10,6 @@ import { useEffect } from 'react'; // Add this import
 const DashboardComponent = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
-  // console.log("Session data: " + session);
   useEffect(() => {
     if (status === "loading") return; // wait for session to load
     if (!session) {
@@ -21,7 +20,7 @@ const DashboardComponent = () => {
   
   return (
     <Container>
-      {1===1 ? (
+      {session ? (
         <div>
           <Header />
           <PetCards />
