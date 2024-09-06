@@ -77,12 +77,6 @@ const userSchema = new mongoose.Schema({
     //ADD MORE IF HAVE IDEA
   },
 
-  wishlist: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Pet",
-    },
-  ],
 
   lastLogin: {
     type: mongoose.Schema.Types.Date,

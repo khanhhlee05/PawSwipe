@@ -1,6 +1,7 @@
 import dbConnect from "@/lib/mongodb";
 import { User } from "@/mongoose/schema/User";
 import { NextResponse } from 'next/server';
+import { SwipedRight } from "../../../mongoose/schema/SwipedRight";
 
 //Create new email address in to MongoDB -> for the landing page
 export async function POST(req) {
@@ -23,6 +24,10 @@ export async function POST(req) {
     if (!confirmedEmail) {
       return new NextResponse('Failed to save user', { status: 500 });
     }
+    //create a swiperight profile in here
+
+    const swipedRight = new SwipedRight({ email: confirmedEmail.email });
+    const saved = await swipedRight.save()
 
     return new NextResponse(JSON.stringify(confirmedEmail), {
         status: 200,
