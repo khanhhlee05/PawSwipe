@@ -28,7 +28,10 @@ export async function POST(req) {
 
     const swipedRight = new SwipedRight({ email: confirmedEmail.email });
     const saved = await swipedRight.save()
-
+    
+    if (!saved){
+      return new NextResponse('Failed to save swiped right profile', { status: 500 });
+    }
     return new NextResponse(JSON.stringify(confirmedEmail), {
         status: 200,
         headers: {
