@@ -27,6 +27,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Team members
 1. Mehdi Atmani
-2. Khanh Lee
+2. Khanh Le
 3. Chris Lee
 4. Christopher Magnuson
