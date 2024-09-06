@@ -41,3 +41,23 @@ export async function PATCH(req, {params}){
         
     }
 }
+
+//get a specific document
+export async function GET(req, {params}){
+    try{
+        await dbConnect()
+        const {email} = params
+
+        const user = await User.findOne({email})
+        if (!user){
+            return new NextResponse('No user found', { status: 404 })
+        }
+        const myWishlist = await SwipedRight.findOne({email})
+        if (!myWishlist){
+            return new NextResponse('No wishlist found', { status: 404 })
+        }
+        return new NextResponse(JSON.stringify(myWishlist), { status:200, headers: { 'content-type': 'application/json'}})
+    }catch(error){
+
+    }
+}

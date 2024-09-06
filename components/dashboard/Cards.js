@@ -24,7 +24,7 @@ const PetCards = () => {
         const email = user?.email
 
       try{
-        const myUser = await fetch(`/api/user/${email}`,
+        const myUser = await fetch(`/api/swipedright/${email}`,
           {
             method: "GET",
             headers: {
@@ -34,7 +34,7 @@ const PetCards = () => {
         )
 
         const dataUser = await myUser.json();
-        let wishList = dataUser.wishlist
+        let wishList = dataUser.petId
        
         let filteredData = data.filter((p) => !wishList.includes(p._id))
        
@@ -75,13 +75,17 @@ const PetCards = () => {
     if (direction === "right") {
       //Save pets to the wishlist array
       const email = user?.email;
-      const updatedWishList = await fetch(`/api/user/${email}`, {
+      const updatedWishList = await fetch(`/api/swipedright/${email}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ wishlist: [`${pet._id}`] }),
+        body: JSON.stringify({petId: pet._id, add: true}),
       });
+      
+      const pets = await updatedWishList.json();
+      console.log(pets);
+     
     }
   };
   return (
