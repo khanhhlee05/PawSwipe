@@ -19,32 +19,31 @@ const PetCards = () => {
           method: "GET",
         });
         const data = await response.json();
-        console.log(data)
+        console.log(data);
 
-        const email = user?.email
+        const email = user?.email;
 
-      try{
-        const myUser = await fetch(`/api/swipedright/${email}`,
-          {
+        try {
+          const myUser = await fetch(`/api/swipedright/${email}`, {
             method: "GET",
             headers: {
-              'Content-Type': 'application/json',
+              "Content-Type": "application/json",
             },
+          });
+
+          const dataUser = await myUser.json();
+          let wishList = dataUser.petId;
+
+          let filteredData = data.filter((p) => !wishList.includes(p._id));
+          console.log(filteredData);
+          setPets(filteredData);
+          setCurrentIndex(filteredData.length - 1);
+        } catch (error) {
+          if (error.response?.status !== 404) {
+            setPets(data);
+            setCurrentIndex(data.length - 1);
           }
-        )
-
-        const dataUser = await myUser.json();
-        let wishList = dataUser.petId
-       
-        let filteredData = data.filter((p) => !wishList.includes(p._id))
-       
-        setPets(filteredData);
-        setCurrentIndex(filteredData.length - 1);
-      }catch(error){
-        console.error("Error fetching user:", error);
-      }
-
-        
+        }
       } catch (error) {
         console.error("Error fetching pets:", error);
       }
@@ -56,7 +55,7 @@ const PetCards = () => {
     const handleKeyDown = (event) => {
       if (currentIndex < 0) {
         return;
-      }; // No more cards to swipe
+      } // No more cards to swipe
 
       if (["ArrowLeft", "a"].includes(event.key)) {
         cardRefs.current[currentIndex]?.swipe("left"); // Trigger left swipe
@@ -80,12 +79,11 @@ const PetCards = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({petId: pet._id, add: true}),
+        body: JSON.stringify({ petId: pet._id, add: true }),
       });
-      
+
       const pets = await updatedWishList.json();
       console.log(pets);
-     
     }
   };
   return (

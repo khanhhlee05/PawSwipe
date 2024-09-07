@@ -17,12 +17,14 @@ import {
   ListItemIcon,
   Divider,
 } from "@mui/material";
-import React, { useState, useEffect } from "react";
-import { useSession, signOut } from "next-auth/react";
+import React, { useState } from "react";
+import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const router = useRouter();
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -32,6 +34,10 @@ export default function Header() {
   const logout = () => {
     setAnchorEl(null);
     signOut({ callbackUrl: "/login" });
+  };
+
+  const navigateToFavorites = () => {
+    router.push("/favorites");
   };
 
   return (
@@ -105,7 +111,7 @@ export default function Header() {
       </div>
       <Pets fontSize="large" />
       <Box>
-        <IconButton>
+        <IconButton onClick={navigateToFavorites}>
           <Favorite className="header__icon" fontSize="large" />
         </IconButton>
         <IconButton>
