@@ -11,7 +11,7 @@ const PetCards = () => {
   const cardRefs = useRef([]);
   const { data: session } = useSession();
   const user = session?.user;
-
+  console.log(user)
   useEffect(() => {
     const fetchPets = async () => {
       try {
@@ -35,7 +35,7 @@ const PetCards = () => {
           let wishList = dataUser.petId;
 
           let filteredData = data.filter((p) => !wishList.includes(p._id));
-          console.log(filteredData);
+          // console.log(filteredData);
           setPets(filteredData);
           setCurrentIndex(filteredData.length - 1);
         } catch (error) {
