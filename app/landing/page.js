@@ -19,7 +19,7 @@ export default function Home() {
     const checkoutSessionJson = await checkoutSession.json()
   
     if (checkoutSession.statusCode == 500){
-      console.log(checkoutSession.message)
+     //console.log(checkoutSession.message)
       return
     }
 

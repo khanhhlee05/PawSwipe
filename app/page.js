@@ -35,7 +35,7 @@ export default function Home() {
       const myEmail = await fetch(`/api/user/${encodeURIComponent(trimEmail)}`, {
         method: "GET",
       });
-      console.log(myEmail);
+     //console.log(myEmail);
       if (myEmail.ok) {
         alert(`Welcome back, ${trimEmail}! You are in. Please stay tuned for updates`);
         setEmail("");
@@ -44,7 +44,7 @@ export default function Home() {
       }
       
     } catch (err) {
-      console.log(err);
+     //console.log(err);
     }
 
     try {
@@ -56,7 +56,7 @@ export default function Home() {
         body: JSON.stringify({ email : trimEmail }),
       });
 
-      console.log(response);
+     //console.log(response);
       if (!response.ok) {
         alert("Failed to load email");
       } else {
@@ -65,7 +65,7 @@ export default function Home() {
       }
 
     } catch (err) {
-      console.log(err);
+     //console.log(err);
       alert("Failed to load email. Please try again.");
     } finally {
       setIsLoading(false); 

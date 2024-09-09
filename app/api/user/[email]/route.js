@@ -49,7 +49,7 @@ export async function PATCH(req, { params }) {
     }
 
 
-    console.log(Object.keys(data));
+   //console.log(Object.keys(data));
 
     for (const key in data) {
       const value = data[key];

@@ -86,4 +86,4 @@ def scrape_pet_details(url, limit):
 
 # Usage
 url = "https://arne-ri.org/available-dogs/"
-scrape_pet_details(url, 5)
+scrape_pet_details(url, 25)

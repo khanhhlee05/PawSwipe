@@ -27,9 +27,9 @@ export async function POST(req) {
     if (!pet) return new Response(JSON.stringify({ message: 'Pet not found' }), { status: 404 });
 
     if (action === 'like') {
-      console.log(`User liked pet: ${pet.name}`); //TODO: update this so that it updates the database (swipedRight property of User collection)
+     //console.log(`User liked pet: ${pet.name}`); //TODO: update this so that it updates the database (swipedRight property of User collection)
     } else if (action === 'dislike') {
-      console.log(`User disliked pet: ${pet.name}`); //TODO: same update here
+     //console.log(`User disliked pet: ${pet.name}`); //TODO: same update here
     }
 
     return new Response(null, { status: 200 });

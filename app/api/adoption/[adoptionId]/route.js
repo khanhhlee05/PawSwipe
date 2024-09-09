@@ -49,7 +49,7 @@ export async function PATCH(req, {params}){
         if (!user){
             return new NextResponse("No User found", {status: 404})
         }
-        console.log(user)
+       //console.log(user)
 
         const pet = await Pet.findById(data["petId"])
         if (!pet){

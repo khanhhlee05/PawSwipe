@@ -3,9 +3,10 @@ import { useSession } from "next-auth/react";
 import React from "react";
 import Header from "./Header.js";
 import PetCards from "./Cards.js";
-import { Container, Button } from "@mui/material";
+import { Container, Button, Box } from "@mui/material";
 import { useRouter } from "next/navigation.js";
-import { useEffect } from 'react'; // Add this import
+import { useEffect } from "react"; // Add this import
+import { CircularProgress } from "@mui/material";
 
 const DashboardComponent = () => {
   const { data: session, status } = useSession();
@@ -17,7 +18,6 @@ const DashboardComponent = () => {
     }
   }, [session, router, status]); // Dependency array
 
-  
   return (
     <Container>
       {session ? (
@@ -26,7 +26,16 @@ const DashboardComponent = () => {
           <PetCards />
         </div>
       ) : (
-        <h1>Loading...</h1> // Change loading state to be an animation
+        <Box
+          sx={{
+            position: "fixed", 
+            top: "50%", 
+            left: "50%", 
+            transform: "translate(-50%, -50%)",
+          }}
+        >
+          <CircularProgress />
+        </Box>
       )}
     </Container>
   );

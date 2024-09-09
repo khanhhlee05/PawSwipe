@@ -76,7 +76,7 @@ export async function PATCH(req, { params }) {
                 }
                 updatedShelter[key] = data[key]
             } else {
-                console.log(key, data[key])
+               //console.log(key, data[key])
                 updatedShelter[key] = data[key]
             }
         }

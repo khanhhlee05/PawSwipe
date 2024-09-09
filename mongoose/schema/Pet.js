@@ -20,7 +20,7 @@ const PetSchema = new mongoose.Schema({
           max: 150
      },
      breed: {
-          type: mongoose.Schema.Types.ObjectId,
+          type: mongoose.Schema.Types.String,
           ref: 'Breed',
           required: [true, 'Breed is required']
      },

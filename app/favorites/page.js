@@ -11,6 +11,8 @@ import {
   CardContent,
   CardActions,
   Button,
+  CircularProgress,
+  Box
 } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { Close } from "@mui/icons-material";
@@ -61,7 +63,7 @@ export default function FavoritesPage() {
       });
 
       if (updatedWishList.ok) {
-        setFavorites((prevFavorites) => 
+        setFavorites((prevFavorites) =>
           prevFavorites.filter((favorite) => favorite._id !== pet._id)
         );
       }
@@ -72,7 +74,18 @@ export default function FavoritesPage() {
   };
 
   if (loading) {
-    return <Typography>Loading...</Typography>; // Show loading message
+    return (
+      <Box
+        sx={{
+          position: "fixed", // Use fixed positioning
+          top: "50%", // Center vertically
+          left: "50%", // Center horizontally
+          transform: "translate(-50%, -50%)",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
   }
 
   return (
@@ -86,7 +99,7 @@ export default function FavoritesPage() {
             <Grid item key={pet._id} xs={12} sm={6} md={4}>
               <Card
                 sx={{
-                  height: "100%",
+                  height: "50vh",
                   display: "flex",
                   flexDirection: "column",
                   transition: "0.3s",
@@ -112,9 +125,14 @@ export default function FavoritesPage() {
                     {pet.description}
                   </Typography>
                 </CardContent>
+
                 <CardActions>
-                <Button startIcon={<Close />} size="small" onClick={() => removeFavorite(pet)}/>
-              </CardActions>
+                  <Button
+                    startIcon={<Close />}
+                    size="small"
+                    onClick={() => removeFavorite(pet)}
+                  />
+                </CardActions>
               </Card>
             </Grid>
           ))}

@@ -91,10 +91,10 @@ const RegisterForm = () => {
   /* 
   Useful to have this function to test for validation behavior
   const onError = (errors) => {
-    console.log("Form submission failed due to validation errors:", errors);
+   //console.log("Form submission failed due to validation errors:", errors);
   };
 
-  console.log("Current form state:", { errors, touchedFields, isSubmitting }); */
+ //console.log("Current form state:", { errors, touchedFields, isSubmitting }); */
 
   return (
     <Container
