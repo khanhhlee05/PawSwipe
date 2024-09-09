@@ -15,7 +15,7 @@ const SwipeButtons = () => {
         <ChatIcon fontSize="large" />
       </IconButton>
       <IconButton>
-        <Listicon fontSize="large" />
+        <ListIcon fontSize="large" />
       </IconButton>
     </div>
   );
