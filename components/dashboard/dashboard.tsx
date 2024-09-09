@@ -22,7 +22,7 @@ const DashboardComponent = () => {
     <Container>
       {session ? (
         <div>
-          <Header />
+        
           <PetCards />
         </div>
       ) : (
