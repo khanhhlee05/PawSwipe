@@ -12,7 +12,11 @@ import {
   CardActions,
   Button,
   CircularProgress,
-  Box
+  Box,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
 } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { Close } from "@mui/icons-material";
@@ -21,6 +25,8 @@ import Image from "next/image";
 export default function FavoritesPage() {
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true); // Add loading state
+  const [open, setOpen] = useState(false); // Add open state
+  const [selectedPet, setSelectedPet] = useState(null)
   const { data: session } = useSession();
   const user = session?.user;
 
@@ -29,6 +35,17 @@ export default function FavoritesPage() {
       fetchFavorites();
     }
   }, [user]);
+
+
+  const handleCardClick = (pet) => {
+    setSelectedPet(pet);
+    setOpen(true);
+  }
+
+  const handleClose = () => {
+    setOpen(false);
+    setSelectedPet(null);
+  };
 
   const fetchFavorites = async () => {
     setLoading(true); // Set loading to true before fetching
@@ -89,61 +106,63 @@ export default function FavoritesPage() {
   }
 
   return (
-    <Container maxWidth="lg" sx={{ py: 8 }}>
+    <Box
+      width="100vw"
+      height="100vh"
+      sx={{ backgroundImage: 'url(/background1.jpg)', py: 8, backgroundSize: 'cover', backgroundAttachment: { xs: 'fixed', sm: 'scroll' } }} >
       <Typography variant="h2" component="h1" gutterBottom align="center">
         Future Furiends ❤️🐶
       </Typography>
       {favorites.length > 0 ? (
-         <Box
-         sx={{
-           maxHeight: '70vh', // Set the maximum height for scrollability
-           overflowY: 'auto', // Enable vertical scrolling
-         }}
-       >
-        <Grid container spacing={4}>
-          {favorites.map((pet) => (
-            <Grid item key={pet._id} xs={12} sm={6} md={4}>
-              <Card
-                sx={{
-                  height: "50vh",
-                  display: "flex",
-                  flexDirection: "column",
-                  transition: "0.3s",
-                  "&:hover": {
-                    transform: "translateY(-5px)",
-                    boxShadow: 3,
-                  },
-                }}
-              >
-                <CardMedia
-                  component="img"
-                  image={pet.photoUrl}
-                  alt={pet.name}
-                  sx={{ height: 200 }} // Optional: Set height of image
-                />
-                <CardContent
-                  sx={{ flexGrow: 1, height: 200, overflowY: "auto" }} // Scrollable content
+        <Box
+          sx={{
+            maxHeight: '70vh', // Set the maximum height for scrollability
+            overflowY: 'auto', // Enable vertical scrolling
+          }}
+        >
+          <Grid container spacing={4}>
+            {favorites.map((pet) => (
+              <Grid item key={pet._id} xs={12} sm={6} md={4}>
+                <Card
+                  onClick={() => handleCardClick(pet)}
+                  sx={{
+                    height: "75vh",
+                    display: "flex",
+                    flexDirection: "column",
+                    transition: "0.3s",
+                    "&:hover": {
+                      transform: "translateY(-5px)",
+                      boxShadow: 3,
+                    },
+                  }}
                 >
-                  <Typography gutterBottom variant="h5" component="h2">
-                    {pet.name}
-                  </Typography>
-                  <Typography>{pet.breed}</Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {pet.description}
-                  </Typography>
-                </CardContent>
-  
-                <CardActions>
-                  <Button
-                    startIcon={<Close />}
-                    size="small"
-                    onClick={() => removeFavorite(pet)}
+                  <CardMedia
+                    component="img"
+                    image={pet.photoUrl}
+                    alt={pet.name}
+                    sx={{ height: "200" }} // Optional: Set height of image
                   />
-                </CardActions>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
+                  <CardContent
+                    sx={{ flexGrow: 1, height: 150}} // Scrollable content
+                  >
+                    <Typography variant="h6" component="h2" color="black">
+                      {pet.name} {pet.breed ? `| ${pet.breed}` : "Mystery"}
+                    </Typography>
+                    <Typography>{pet.location}</Typography>
+
+                  </CardContent>
+
+                  <CardActions>
+                    <Button
+                      startIcon={<Close />}
+                      size="medium"
+                      onClick={() => removeFavorite(pet)}
+                    />
+                  </CardActions>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
         </Box>
       ) : (
         <Box
@@ -165,7 +184,21 @@ export default function FavoritesPage() {
           </Typography>
         </Box>
       )}
-    </Container>
+
+      {/*Modal for pet info*/}
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>{selectedPet?.name}</DialogTitle>
+        <DialogContent>
+          <img
+            src={selectedPet?.photoUrl}
+            alt={selectedPet?.name}
+            style={{ width: "100%" }}
+          />
+          <Typography variant="h6">{selectedPet?.breed}</Typography>
+          <Typography>{selectedPet?.description}</Typography>
+        </DialogContent>
+      </Dialog>
+    </Box>
   );
-  
+
 }
