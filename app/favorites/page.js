@@ -113,11 +113,11 @@ export default function FavoritesPage() {
       <Box
         width="100vw"
         height="100vh"
-        sx={{ backgroundImage: 'url(/background1.jpg)', py: 8, backgroundSize: 'cover', backgroundAttachment: { xs: 'fixed', sm: 'scroll' } }} >
+        sx={{ backgroundImage: 'url(/background1.jpg)', backgroundSize: 'cover', backgroundAttachment: { xs: 'fixed', sm: 'scroll' } }} >
           <Header />
       
         <Typography variant="h2" component="h1" gutterBottom align="center">
-          Future Furiends ❤️🐶
+          Future Friends ❤️🐶
         </Typography>
         {favorites.length > 0 ? (
           <Box
@@ -136,6 +136,7 @@ export default function FavoritesPage() {
                       display: "flex",
                       flexDirection: "column",
                       transition: "0.3s",
+                      backgroundImage: 'url(/background1.jpg)', backgroundSize: 'cover', backgroundAttachment: { xs: 'fixed', sm: 'scroll' } ,
                       "&:hover": {
                         transform: "translateY(-5px)",
                         boxShadow: 3,

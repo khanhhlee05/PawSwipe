@@ -14,7 +14,9 @@ import {
   DialogTitle,
   DialogContent,
   Slide,
+
 } from "@mui/material";
+import Image from "next/image";
 
 const PetCards = () => {
   const [pets, setPets] = useState([]);
@@ -25,10 +27,10 @@ const PetCards = () => {
 
   const { data: session } = useSession();
   const user = session?.user;
- //console.log(user);
+  //console.log(user);
 
   const handleCardClick = (pet) => {
-   //console.log("clicked");
+    //console.log("clicked");
     setSelectedPet(pet); // Set the selected pet
     setOpen(true); // Open the modal
   };
@@ -44,7 +46,7 @@ const PetCards = () => {
           method: "GET",
         });
         const data = await response.json();
-       //console.log(data);
+        //console.log(data);
 
         const email = user?.email;
 
@@ -96,6 +98,7 @@ const PetCards = () => {
   const onSwipe = async (direction, pet) => {
     if (currentIndex >= 0) {
       setCurrentIndex(currentIndex - 1); // Move to the next card
+    console.log(currentIndex)
     }
     if (direction === "right") {
       // Save pets to the wishlist array
@@ -109,88 +112,109 @@ const PetCards = () => {
       });
 
       const pets = await updatedWishList.json();
-     //console.log(pets);
+      //console.log(pets);
     }
   };
   return (
-    
-    <div className="card_container" >
-      
-      {pets.map((pet, index) => (
-        <TinderCard
-          className="swipe"
-          ref={(el) => (cardRefs.current[index] = el)}
-          key={pet._id}
-          preventSwipe={["up", "down"]}
-          onSwipe={(direction) => onSwipe(direction, pet)}
-        >
-          <Card
-            onClick={() => handleCardClick(pet)}
-            sx={{
-              width: 500,
-              maxWidth: "85vw",
-              height: "50vh",
-              position: "relative",
-              borderRadius: 10,
-              overflow: "hidden",
-              transition: "0.3s",
-              "&:hover": {
-                transform: "translateY(-5px)",
-                boxShadow: 3,
-              },
-            }}
-          >
-            <CardMedia
-              component="img"
-              image={pet.photoUrl}
-              alt={pet.name}
-              sx={{
-                height: "100%",
-                objectFit: "cover",
-              }}
-            />
-            <CardContent
-              sx={{
-                position: "absolute",
-                bottom: 0,
-                width: "100%",
-                backgroundColor: "rgba(0, 0, 0, 0.6)",
-                padding: 2,
-              }}
+    <Box>
+      {currentIndex > 0 ? (
+        <div className="card_container" >
+
+          {pets.map((pet, index) => (
+            <TinderCard
+              className="swipe"
+              ref={(el) => (cardRefs.current[index] = el)}
+              key={pet._id}
+              preventSwipe={["up", "down"]}
+              onSwipe={(direction) => onSwipe(direction, pet)}
             >
-              <Box
+              <Card
+                onClick={() => handleCardClick(pet)}
                 sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "flex-start",
-                  padding: "3px 16px",
+                  width: 500,
+                  maxWidth: "85vw",
+                  height: "75vh",
+                  position: "relative",
+                  borderRadius: 10,
+                  overflow: "hidden",
+                  transition: "0.3s",
+                  "&:hover": {
+                    transform: "translateY(-5px)",
+                    boxShadow: 3,
+                  },
                 }}
               >
-                <Typography variant="h6" component="h2" color="white">
-                  {pet.name} {pet.breed ? `| ${pet.breed}` : "Mystery"}
-                </Typography>
-                <Typography variant="subtitle1" component="h2" color="white">
-                  {pet.location}
-                </Typography>
-              </Box>
-            </CardContent>
-          </Card>
-        </TinderCard>
-      ))}
-      {/* Modal for pet info */}
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>{selectedPet?.name}</DialogTitle>
-        <DialogContent>
-          <img
-            src={selectedPet?.photoUrl}
-            alt={selectedPet?.name}
-            style={{ width: "100%" }}
+                <CardMedia
+                  component="img"
+                  image={pet.photoUrl}
+                  alt={pet.name}
+                  sx={{
+                    height: "100%",
+                    objectFit: "cover",
+                  }}
+                />
+                <CardContent
+                  sx={{
+                    position: "absolute",
+                    bottom: 0,
+                    width: "100%",
+                    backgroundColor: "rgba(0, 0, 0, 0.6)",
+                    padding: 2,
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "flex-start",
+                      padding: "3px 16px",
+                    }}
+                  >
+                    <Typography variant="h6" component="h2" color="white">
+                      {pet.name} {pet.breed ? `| ${pet.breed}` : "Mystery"}
+                    </Typography>
+                    <Typography variant="subtitle1" component="h2" color="white">
+                      {pet.location}
+                    </Typography>
+                  </Box>
+                </CardContent>
+              </Card>
+            </TinderCard>
+          ))}
+          {/* Modal for pet info */}
+          <Dialog open={open} onClose={handleClose}>
+            <DialogTitle>{selectedPet?.name}</DialogTitle>
+            <DialogContent>
+              <img
+                src={selectedPet?.photoUrl}
+                alt={selectedPet?.name}
+                style={{ width: "100%" }}
+              />
+              <Typography variant="h6">{selectedPet?.breed}</Typography>
+              <Typography>{selectedPet?.description}</Typography>
+            </DialogContent>
+          </Dialog>
+        </div>
+      ) : (
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            mt: 4,
+          }}
+        >
+          <Image
+            src="/notFound.jpg"
+            width={400}
+            height={400}
+            alt="No favorites"
           />
-          <Typography variant="h6">{selectedPet?.breed}</Typography>
-          <Typography>{selectedPet?.description}</Typography>
-        </DialogContent>
-      </Dialog>
-    </div>
+          <Typography variant="h6" align="center" sx={{ mt: 2 }}>
+          All pets have been swiped! Reload the page to browse through pets you've previously skipped.          </Typography>
+        </Box>
+      )}
+    </Box>
   );
 };
-export default PetCards;
+      export default PetCards;
