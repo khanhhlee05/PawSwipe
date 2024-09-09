@@ -94,6 +94,12 @@ export default function FavoritesPage() {
         Future Furiends ❤️🐶
       </Typography>
       {favorites.length > 0 ? (
+         <Box
+         sx={{
+           maxHeight: '70vh', // Set the maximum height for scrollability
+           overflowY: 'auto', // Enable vertical scrolling
+         }}
+       >
         <Grid container spacing={4}>
           {favorites.map((pet) => (
             <Grid item key={pet._id} xs={12} sm={6} md={4}>
@@ -113,9 +119,10 @@ export default function FavoritesPage() {
                   component="img"
                   image={pet.photoUrl}
                   alt={pet.name}
+                  sx={{ height: 200 }} // Optional: Set height of image
                 />
                 <CardContent
-                  sx={{ flexGrow: 1, height: 200, overflow: "auto" }}
+                  sx={{ flexGrow: 1, height: 200, overflowY: "auto" }} // Scrollable content
                 >
                   <Typography gutterBottom variant="h5" component="h2">
                     {pet.name}
@@ -125,7 +132,7 @@ export default function FavoritesPage() {
                     {pet.description}
                   </Typography>
                 </CardContent>
-
+  
                 <CardActions>
                   <Button
                     startIcon={<Close />}
@@ -137,12 +144,14 @@ export default function FavoritesPage() {
             </Grid>
           ))}
         </Grid>
+        </Box>
       ) : (
-        <div
-          style={{
+        <Box
+          sx={{
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            mt: 4,
           }}
         >
           <Image
@@ -151,11 +160,12 @@ export default function FavoritesPage() {
             height={400}
             alt="No favorites"
           />
-          <Typography variant="h6" align="center">
+          <Typography variant="h6" align="center" sx={{ mt: 2 }}>
             No favorites found.
           </Typography>
-        </div>
+        </Box>
       )}
     </Container>
   );
+  
 }
