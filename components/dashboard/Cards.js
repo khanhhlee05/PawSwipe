@@ -113,7 +113,9 @@ const PetCards = () => {
     }
   };
   return (
-    <div className="card_container">
+    
+    <div className="card_container" >
+      
       {pets.map((pet, index) => (
         <TinderCard
           className="swipe"

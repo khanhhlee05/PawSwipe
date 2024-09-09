@@ -40,6 +40,10 @@ export default function Header() {
     router.push("/favorites");
   };
 
+  const navigateToDashBoard = () => {
+    router.push("/dashboard");
+  }
+
   return (
     <div className="header">
       <div>
@@ -109,14 +113,14 @@ export default function Header() {
           </MenuItem>
         </Menu>
       </div>
+      <IconButton onClick={navigateToDashBoard}>
       <Pets fontSize="large" />
+      </IconButton>
       <Box>
         <IconButton onClick={navigateToFavorites}>
           <Favorite className="header__icon" fontSize="large" />
         </IconButton>
-        <IconButton>
-          <Forum className="header__icon" fontSize="large" />
-        </IconButton>
+       
       </Box>
     </div>
   );

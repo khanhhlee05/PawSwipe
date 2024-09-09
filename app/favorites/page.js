@@ -21,7 +21,7 @@ import {
 import { useSession } from "next-auth/react";
 import { Close } from "@mui/icons-material";
 import Image from "next/image";
-import { useRouter } from 'next/router';
+import Header from "../../components/dashboard/Header"
 
 export default function FavoritesPage() {
   const [favorites, setFavorites] = useState([]);
@@ -114,7 +114,8 @@ export default function FavoritesPage() {
         width="100vw"
         height="100vh"
         sx={{ backgroundImage: 'url(/background1.jpg)', py: 8, backgroundSize: 'cover', backgroundAttachment: { xs: 'fixed', sm: 'scroll' } }} >
-     
+          <Header />
+      
         <Typography variant="h2" component="h1" gutterBottom align="center">
           Future Furiends ❤️🐶
         </Typography>
