@@ -17,6 +17,10 @@ pnpm dev
 bun dev
 ```
 
+## Short Demo Gif
+
+<img src="shortdemo.gif"></img>
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## Contributing for team members.
