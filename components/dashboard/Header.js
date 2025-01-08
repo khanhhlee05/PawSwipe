@@ -39,6 +39,10 @@ export default function Header() {
   const navigateToFavorites = () => {
     router.push("/favorites");
   };
+  //TODO: change to the actual url (congif Nginx)
+  const navigateToChat = () => {
+    window.open(`${process.env.NEXT_PUBLIC_API_GATEWAY_URL}/chat`, '_blank');
+  };
 
   const navigateToDashBoard = () => {
     router.push("/dashboard");
@@ -114,13 +118,15 @@ export default function Header() {
         </Menu>
       </div>
       <IconButton onClick={navigateToDashBoard}>
-      <Pets fontSize="large" />
+        <Pets fontSize="large" />
       </IconButton>
       <Box>
         <IconButton onClick={navigateToFavorites}>
           <Favorite className="header__icon" fontSize="large" />
         </IconButton>
-       
+        <IconButton onClick={navigateToChat}>
+          <Forum fontSize="large" />
+        </IconButton>
       </Box>
     </div>
   );

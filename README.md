@@ -21,7 +21,9 @@ bun dev
 
 <img src="shortdemo.gif"></img>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Open [http://localhost:80](http://localhost:80) with your browser to see the chat services, or navigate in the dashboard to see the chat services.
+3. Here is the chat services: [https://github.com/khanhhlee05/PawSwipe_Chat_Microservices](Github)
 
 ## Contributing for team members.
 1. Clone the repository.

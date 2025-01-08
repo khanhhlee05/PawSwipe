@@ -13,13 +13,16 @@ const DashboardComponent = () => {
   const router = useRouter();
   useEffect(() => {
     if (status === "loading") return; // wait for session to load
+    //TODO: remove this once we have a proper login system
     if (!session) {
+  
       router.push("login"); // Redirect to login if not logged in
     }
   }, [session, router, status]); // Dependency array
 
   return (
     <Container>
+      {/* TODO: remove this once we have a proper login system */}
       {session ? (
         <div>
         
